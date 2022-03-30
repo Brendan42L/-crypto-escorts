@@ -51,7 +51,7 @@ const bl = () => {
           cityFive: res.data.cityFive,
           stateFive: res.data.stateFive,
           tours: res.data.tours,
-          touring: res.data.touring
+          touring: res.data.touring,
         }));
       })
       .catch((error) => {
@@ -138,7 +138,7 @@ const bl = () => {
 
   const selectCurrentCity = (model) => {
     setCurrentCity(model);
-    console.log(model);
+
   };
 
   const handleClickOpen = () => {
@@ -163,11 +163,11 @@ const bl = () => {
       stateFour: "",
       cityFive: "",
       stateFive: "",
-      touring: touring ? false : true
+      touring: touring ? false : true,
     }));
     touring ? setTouring(false) : setTouring(true);
     handleClose();
-    onSave()
+    onSave();
   };
 
   const onSave = () => {

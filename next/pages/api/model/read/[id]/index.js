@@ -8,7 +8,7 @@ const handler = async (req, res) => {
     const _id = req.query.id;
     await Model.findById(_id)
       .select(
-        "fName lName gender age height hair bio cup country stateOne cityOne stateTwo cityTwo stateThree cityThree stateFour cityFour stateFive cityFive touring  nationality specialties coWorkers notAvailable tours"
+        "fName lName gender age height hair bio cup country stateOne cityOne stateTwo cityTwo stateThree cityThree stateFour cityFour stateFive cityFive touring  nationality specialties coWorkers notAvailable tours website workMobile workEmail twitter instagram"
       )
       .then((result) => {
         res.status(200).json(result);

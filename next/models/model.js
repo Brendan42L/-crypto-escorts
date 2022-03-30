@@ -163,11 +163,23 @@ const modelsSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
-
-  mobile: {
+  workMobile: {
     type: String,
     trim: true,
   },
+  twitter: {
+    type: String,
+    trim: true,
+  },
+  instagram: {
+    type: String,
+    trim: true,
+  },
+  website: {
+    type: String,
+    trim: true,
+  },
+
   gender: {
     type: String,
     trim: true,
