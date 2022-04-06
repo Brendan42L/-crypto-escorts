@@ -10,6 +10,9 @@ const useStyles = makeStyles(() => ({
     borderRadius: "10px 10px 0 0  !important",
     margin: "0.8em auto !important",
     width: "100% !important",
+    "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
+      border: "none",
+    }
   },
 
   inputLabelSelect: {

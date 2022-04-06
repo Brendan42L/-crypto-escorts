@@ -151,8 +151,6 @@ const modelsSchema = new mongoose.Schema({
     },
   ],
 
-  specialties: [],
-
   email: {
     type: String,
     required: [true, "Please provide a email"],
@@ -179,6 +177,9 @@ const modelsSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
+
+  services: [],
+  categories: [],
 
   gender: {
     type: String,

@@ -7,8 +7,8 @@ const sendEmail = (emailData) => {
       secure: false,
       requireTLS: true,
       auth: {
-        user: "diveboatemployment@gmail.com",
-        pass: "bwldeqdvqfmbjmuh",
+        user: "cryptoescorts@gmail.com",
+        pass: "_66SPs>n",
       },
     });
     return transporter
