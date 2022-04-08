@@ -9,7 +9,7 @@ const useStyles = makeStyles(() => ({
       border: "none !important",
     },
     margin: "1em 0 1em 0 ",
-    borderRadius: "10px 10px 0 0  !important",
+    borderRadius: "10px",
     margin: "0.8em auto !important",
     color: "#FFF !important",
     "& :-webkit-autofill": {
@@ -49,11 +49,12 @@ const Input = (props) => {
         className={classes.text}
         fullWidth
         label={props.label}
-        variant="filled"
+        variant="outlined"
         value={props.value}
         name={props.name}
         onBlur={props.onBlur}
         onChange={props.onChange}
+
         InputProps={{
           className: classes.input,
         }}

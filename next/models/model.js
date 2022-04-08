@@ -180,6 +180,12 @@ const modelsSchema = new mongoose.Schema({
 
   services: [],
   categories: [],
+  rates: [],
+
+  ratesNotes: {
+    type: String,
+    trim: true,
+  },
 
   gender: {
     type: String,

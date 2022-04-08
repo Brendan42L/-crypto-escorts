@@ -7,7 +7,7 @@ const useStyles = makeStyles(() => ({
   formControl: {
     backgroundColor: "RGB(255, 255, 255, 0.4)",
     color: "#FFF !important",
-    borderRadius: "10px 10px 0 0  !important",
+    borderRadius: "10px",
     margin: "0.8em auto !important",
     width: "100% !important",
     "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
@@ -51,7 +51,7 @@ const Input = (props) => {
           name={props.name}
           defaultValue=""
           onChange={props.onChange}
-          variant="filled"
+          variant="outlined"
           renderValue={props.renderValue}
           MenuProps={props.menuProps}
           autoComplete={props.autoComplete}

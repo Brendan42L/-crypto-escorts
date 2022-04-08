@@ -8,8 +8,8 @@ const useStyles = makeStyles(() => ({
     color: "RGB(255, 255, 255, 1) !important",
     border: "1px solid #FFF !important",
     borderRadius: "15px !important",
-    width: "150px",
-    margin: "0 auto"
+    width: "160px",
+    margin: "0 auto",
   },
 }));
 

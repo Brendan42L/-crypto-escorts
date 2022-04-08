@@ -1,67 +1,37 @@
-import React from "react";
-import Selects from "../../inputs/Selects";
-import TextInput from "../../inputs/Input";
-import bl from "./bl";
-import { MenuItem, Grid } from "@mui/material";
+import { useState } from "react";
+import Rates from "./Rates";
+import Availability from "./Availability";
+import styles from "./ratesAvailability.module.css";
+import { Grid, ButtonGroup, Button } from "@mui/material";
 
 const RatesAvailability = () => {
-  const {
-    handleDuration,
-    handlePrice,
-    duration,
-    getTimes,
-    price,
-    extra,
-    handleExtra,
-  } = bl();
+  const [panel, setPanel] = useState(0);
+
+  const switchPanel = () => {
+    !panel ? setPanel(1) : setPanel(0);
+  };
 
   return (
-    <Grid container spacing={2} sx={{ padding: "1em" }}>
-      <Grid item xs={6}>
-        <Selects
-          id="duration"
-          helperText={"Duration"}
-          labelId="duration"
-          value={duration ? duration : ""}
-          label="Duration"
-          name="duration"
-          onChange={handleDuration}
-          select={getTimes().map((item, index) => (
-            <MenuItem value={item.value} key={index}>
-              {item.menu}
-            </MenuItem>
-          ))}
-        />
+    <Grid container spacing={1} sx={{ padding: "1em 1em 6em 1em" }}>
+      <Grid
+        item
+        xs={12}
+        sx={{ display: "flex", justifyContent: "space-evenly" }}
+      >
+        <Button
+          style={{ color: panel === 0 ? "orange" : "white" }}
+          onClick={switchPanel}
+        >
+          Rates
+        </Button>
+        <Button
+          style={{ color: panel === 1 ? "orange" : "white" }}
+          onClick={switchPanel}
+        >
+          Availability
+        </Button>
       </Grid>
-      <Grid item xs={6}>
-        <Selects
-          id="price"
-          helperText={"Price"}
-          labelId="duration"
-          value={price ? price : ""}
-          label="Price"
-          name="time"
-          onChange={handlePrice}
-          select={getTimes().map((item, index) => (
-            <MenuItem value={item.value} key={index}>
-              {item.menu}
-            </MenuItem>
-          ))}
-        />
-      </Grid>
-
-      <Grid item xs={12}>
-        <TextInput
-          multiline={true}
-          onChange={handleExtra}
-          name="extra"
-          value={extra ? extra : ""}
-          label={!extra && "Extra Info"}
-          type="text"
-          helperText={"Extra Info"}
-          rows={4}
-        />
-      </Grid>
+      {!panel ? <Rates /> : <Availability />}
     </Grid>
   );
 };
