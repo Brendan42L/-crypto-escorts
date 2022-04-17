@@ -306,13 +306,4 @@ function MyApp({ Component, pageProps }) {
 
 export default MyApp;
 
-// useEffect(() => {
-//   const handleRouteChange = () => {
-//     loadingModelOpen();
-//   };
-//   router.events.on("routeChangeStart", handleRouteChange);
 
-//   return () => {
-//     router.events.off("routeChangeStart", handleRouteChange);
-//   };
-// }, []);

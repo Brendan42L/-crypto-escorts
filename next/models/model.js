@@ -181,6 +181,93 @@ const modelsSchema = new mongoose.Schema({
   services: [],
   categories: [],
   rates: [],
+  availability: {
+    mondayFrom: {
+      type: String,
+      trim: true,
+    },
+    mondayTo: {
+      type: String,
+      trim: true,
+    },
+    tuesdayFrom: {
+      type: String,
+      trim: true,
+    },
+    tuesdayTo: {
+      type: String,
+      trim: true,
+    },
+    wednesdayFrom: {
+      type: String,
+      trim: true,
+    },
+    wednesdayTo: {
+      type: String,
+      trim: true,
+    },
+
+    thursdayFrom: {
+      type: String,
+      trim: true,
+    },
+    thursdayTo: {
+      type: String,
+      trim: true,
+    },
+
+    fridayFrom: {
+      type: String,
+      trim: true,
+    },
+    fridayTo: {
+      type: String,
+      trim: true,
+    },
+
+    saturdayFrom: {
+      type: String,
+      trim: true,
+    },
+    saturdayTo: {
+      type: String,
+      trim: true,
+    },
+
+    sundayFrom: {
+      type: String,
+      trim: true,
+    },
+    sundayTo: {
+      type: String,
+      trim: true,
+    },
+    notes: {
+      type: String,
+      trim: true,
+    },
+
+    shortNotice: {
+      type: Boolean,
+      default: false,
+    },
+    appointment: {
+      type: Boolean,
+      default: false,
+    },
+    contactMe: {
+      type: Boolean,
+      default: false,
+    },
+    flexible: {
+      type: Boolean,
+      default: false,
+    },
+    twentyFour: {
+      type: Boolean,
+      default: false,
+    },
+  },
 
   ratesNotes: {
     type: String,

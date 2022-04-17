@@ -139,7 +139,7 @@ const Rates = () => {
                 value={extraNotes ? extraNotes : ""}
                 type="text"
                 helperText={
-                  "Enter information or rates that are not listed above."
+                  "Enter any further information or rates that are not listed above."
                 }
               />
             </Grid>

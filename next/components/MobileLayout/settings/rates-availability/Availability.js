@@ -1,10 +1,21 @@
 import styles from "./ratesAvailability.module.css";
 
-import bl from "./blRates";
-import { MenuItem, Grid, InputAdornment, TextField, Chip } from "@mui/material";
+import bl from "./blAval";
+import {
+  MenuItem,
+  Grid,
+  InputAdornment,
+  TextField,
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+} from "@mui/material";
 import MobileTimePicker from "@mui/lab/MobileTimePicker";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
+import TextInput from "../../inputs/Input";
+import Btn from "../../btn/Save";
+import SaveIcon from "@mui/icons-material/Save";
 
 const time = {
   color: "#FFF !important",
@@ -15,6 +26,7 @@ const time = {
     color: "RGB(255, 255, 255, 1) !important",
     cursor: "pointer !important",
     border: "none",
+    textAlign: "center",
   },
   "& .MuiOutlinedInput-root": {
     "& fieldset": {
@@ -22,7 +34,62 @@ const time = {
     },
   },
 };
+
+const checkboxes = {
+  display: "flex",
+  justifyContent: "space-evenly",
+  flexDirection: "column",
+  flexWrap: "wrap",
+  padding: "1em",
+};
+
+const checkBox = {
+  color: "white",
+  "&.Mui-checked": {
+    color: "red ",
+  },
+};
+
+const avalLight = {
+  color: "green",
+};
+
 const Availability = () => {
+  const {
+    mondayFrom,
+    mondayTo,
+    tuesdayFrom,
+    tuesdayTo,
+    wednesdayFrom,
+    wednesdayTo,
+    thursdayFrom,
+    thursdayTo,
+    fridayFrom,
+    fridayTo,
+    saturdayFrom,
+    saturdayTo,
+    sundayFrom,
+    sundayTo,
+    datePicker,
+    handleNotes,
+    notes,
+    handleSave,
+    handleCheckBox,
+    shortNotice,
+    appointment,
+    contactMe,
+    flexible,
+    twentyFour,
+    monday,
+    tuesday,
+    wednesday,
+    thursday,
+    friday,
+    saturday,
+    sunday,
+    changeAval,
+  } = bl();
+
   return (
     <>
       <Grid item xs={12} sx={{ marginTop: "1.5em" }}>
@@ -35,266 +102,409 @@ const Availability = () => {
           </tr>
           <tr>
             <td>
-              <RadioButtonUncheckedIcon />
+              {monday ? (
+                <RadioButtonCheckedIcon
+                  onClick={() => changeAval("monday")}
+                  sx={avalLight}
+                />
+              ) : (
+                <RadioButtonUncheckedIcon
+                  onClick={() => changeAval("monday")}
+                />
+              )}
             </td>
             <td>Mon</td>
             <td>
-              <MobileTimePicker
-                // value={startTimeModel}
-                // onChange={startTime}
-                renderInput={(params) => (
-                  <>
-                    <TextField name="start" sx={time} {...params} />
-                  </>
-                )}
-              />
+              {monday ? (
+                <MobileTimePicker
+                  value={mondayFrom}
+                  onChange={(value) => datePicker(value, "mondayFrom")}
+                  renderInput={(params) => (
+                    <>
+                      <TextField name="mondayFrom" sx={time} {...params} />
+                    </>
+                  )}
+                />
+              ) : (
+                <p style={{ textAlign: "center", width: "100%" }}>
+                  Not Available
+                </p>
+              )}
             </td>
             <td>
-              {" "}
-              <MobileTimePicker
-                // value={startTimeModel}
-                // onChange={startTime}
-                renderInput={(params) => (
-                  <>
-                    <TextField
-                      name="start"
-                      sx={time}
-                      {...params}
-                    />
-                  </>
-                )}
-              />
+              {monday ? (
+                <MobileTimePicker
+                  value={mondayTo}
+                  onChange={(value) => datePicker(value, "mondayTo")}
+                  renderInput={(params) => (
+                    <>
+                      <TextField name="mondayTo" sx={time} {...params} />
+                    </>
+                  )}
+                />
+              ) : (
+                <p style={{ textAlign: "center", width: "100%" }}>
+                  Not Available
+                </p>
+              )}
             </td>
           </tr>
           <tr>
             <td>
-              <RadioButtonUncheckedIcon />
+              {tuesday ? (
+                <RadioButtonCheckedIcon
+                  onClick={() => changeAval("tuesday")}
+                  sx={avalLight}
+                />
+              ) : (
+                <RadioButtonUncheckedIcon
+                  onClick={() => changeAval("tuesday")}
+                />
+              )}
             </td>
             <td>Tue</td>
             <td>
-              {" "}
-              <MobileTimePicker
-                // value={startTimeModel}
-                // onChange={startTime}
-                renderInput={(params) => (
-                  <>
-                    <TextField
-                      name="start"
-                      sx={time}
-                      {...params}
-                    />
-                  </>
-                )}
-              />
+              {tuesday ? (
+                <MobileTimePicker
+                  value={tuesdayFrom}
+                  onChange={(value) => datePicker(value, "tuesdayFrom")}
+                  renderInput={(params) => (
+                    <>
+                      <TextField name="start" sx={time} {...params} />
+                    </>
+                  )}
+                />
+              ) : (
+                <p style={{ textAlign: "center" }}>Not Available</p>
+              )}
             </td>
             <td>
-              {" "}
-              <MobileTimePicker
-                // value={startTimeModel}
-                // onChange={startTime}
-                renderInput={(params) => (
-                  <>
-                    <TextField
-                      name="start"
-                      sx={time}
-                      {...params}
-                    />
-                  </>
-                )}
-              />
+              {tuesday ? (
+                <MobileTimePicker
+                  value={tuesdayTo}
+                  onChange={(value) => datePicker(value, "tuesdayTo")}
+                  renderInput={(params) => (
+                    <>
+                      <TextField name="start" sx={time} {...params} />
+                    </>
+                  )}
+                />
+              ) : (
+                <p style={{ textAlign: "center" }}>Not Available</p>
+              )}
             </td>
           </tr>
           <tr>
             <td>
-              <RadioButtonUncheckedIcon />
+              {wednesday ? (
+                <RadioButtonCheckedIcon
+                  onClick={() => changeAval("wednesday")}
+                  sx={avalLight}
+                />
+              ) : (
+                <RadioButtonUncheckedIcon
+                  onClick={() => changeAval("wednesday")}
+                />
+              )}
             </td>
             <td>Wed</td>
             <td>
-              {" "}
-              <MobileTimePicker
-                // value={startTimeModel}
-                // onChange={startTime}
-                renderInput={(params) => (
-                  <>
-                    <TextField
-                      name="start"
-                      sx={time}
-                      {...params}
-                    />
-                  </>
-                )}
-              />
+              {wednesday ? (
+                <MobileTimePicker
+                  value={wednesdayFrom}
+                  onChange={(value) => datePicker(value, "wednesdayFrom")}
+                  renderInput={(params) => (
+                    <>
+                      <TextField name="start" sx={time} {...params} />
+                    </>
+                  )}
+                />
+              ) : (
+                <p style={{ textAlign: "center" }}>Not Available</p>
+              )}
             </td>
             <td>
-              {" "}
-              <MobileTimePicker
-                // value={startTimeModel}
-                // onChange={startTime}
-                renderInput={(params) => (
-                  <>
-                    <TextField
-                      name="start"
-                      sx={time}
-                      {...params}
-                    />
-                  </>
-                )}
-              />
+              {wednesday ? (
+                <MobileTimePicker
+                  value={wednesdayTo}
+                  onChange={(value) => datePicker(value, "wednesdayTo")}
+                  renderInput={(params) => (
+                    <>
+                      <TextField name="start" sx={time} {...params} />
+                    </>
+                  )}
+                />
+              ) : (
+                <p style={{ textAlign: "center" }}>Not Available</p>
+              )}
             </td>
           </tr>
           <tr>
             <td>
-              <RadioButtonUncheckedIcon />
+              {thursday ? (
+                <RadioButtonCheckedIcon
+                  onClick={() => changeAval("thursday")}
+                  sx={avalLight}
+                />
+              ) : (
+                <RadioButtonUncheckedIcon
+                  onClick={() => changeAval("thursday")}
+                />
+              )}
             </td>
             <td>Thu</td>
             <td>
-              {" "}
-              <MobileTimePicker
-                // value={startTimeModel}
-                // onChange={startTime}
-                renderInput={(params) => (
-                  <>
-                    <TextField
-                      name="start"
-                      sx={time}
-                      {...params}
-                    />
-                  </>
-                )}
-              />
+              {thursday ? (
+                <MobileTimePicker
+                  value={thursdayFrom}
+                  onChange={(value) => datePicker(value, "thursdayFrom")}
+                  renderInput={(params) => (
+                    <>
+                      <TextField name="start" sx={time} {...params} />
+                    </>
+                  )}
+                />
+              ) : (
+                <p style={{ textAlign: "center" }}>Not Available</p>
+              )}
             </td>
             <td>
-              {" "}
-              <MobileTimePicker
-                // value={startTimeModel}
-                // onChange={startTime}
-                renderInput={(params) => (
-                  <>
-                    <TextField
-                      name="start"
-                      sx={time}
-                      {...params}
-                    />
-                  </>
-                )}
-              />
+              {thursday ? (
+                <MobileTimePicker
+                  value={thursdayTo}
+                  onChange={(value) => datePicker(value, "thursdayTo")}
+                  renderInput={(params) => (
+                    <>
+                      <TextField name="start" sx={time} {...params} />
+                    </>
+                  )}
+                />
+              ) : (
+                <p style={{ textAlign: "center" }}>Not Available</p>
+              )}
             </td>
           </tr>
           <tr>
             <td>
-              <RadioButtonUncheckedIcon />
+              {friday ? (
+                <RadioButtonCheckedIcon
+                  onClick={() => changeAval("friday")}
+                  sx={avalLight}
+                />
+              ) : (
+                <RadioButtonUncheckedIcon
+                  onClick={() => changeAval("friday")}
+                />
+              )}
             </td>
             <td>Fri</td>
             <td>
-              {" "}
-              <MobileTimePicker
-                // value={startTimeModel}
-                // onChange={startTime}
-                renderInput={(params) => (
-                  <>
-                    <TextField
-                      name="start"
-                      sx={time}
-                      {...params}
-                    />
-                  </>
-                )}
-              />
+              {friday ? (
+                <MobileTimePicker
+                  value={fridayFrom}
+                  onChange={(value) => datePicker(value, "fridayFrom")}
+                  renderInput={(params) => (
+                    <>
+                      <TextField name="start" sx={time} {...params} />
+                    </>
+                  )}
+                />
+              ) : (
+                <p style={{ textAlign: "center" }}>Not Available</p>
+              )}
             </td>
             <td>
-              {" "}
-              <MobileTimePicker
-                // value={startTimeModel}
-                // onChange={startTime}
-                renderInput={(params) => (
-                  <>
-                    <TextField
-                      name="start"
-                      sx={time}
-                      {...params}
-                    />
-                  </>
-                )}
-              />
+              {friday ? (
+                <MobileTimePicker
+                  value={fridayTo}
+                  onChange={(value) => datePicker(value, "fridayTo")}
+                  renderInput={(params) => (
+                    <>
+                      <TextField name="start" sx={time} {...params} />
+                    </>
+                  )}
+                />
+              ) : (
+                <p style={{ textAlign: "center" }}>Not Available</p>
+              )}
             </td>
           </tr>
           <tr>
             <td>
-              <RadioButtonUncheckedIcon />
+              {saturday ? (
+                <RadioButtonCheckedIcon
+                  onClick={() => changeAval("saturday")}
+                  sx={avalLight}
+                />
+              ) : (
+                <RadioButtonUncheckedIcon
+                  onClick={() => changeAval("saturday")}
+                />
+              )}
             </td>
             <td>Sat</td>
             <td>
-              {" "}
-              <MobileTimePicker
-                // value={startTimeModel}
-                // onChange={startTime}
-                renderInput={(params) => (
-                  <>
-                    <TextField
-                      name="start"
-                      sx={time}
-                      {...params}
-                    />
-                  </>
-                )}
-              />
+              {saturday ? (
+                <MobileTimePicker
+                  value={saturdayFrom}
+                  onChange={(value) => datePicker(value, "saturdayFrom")}
+                  renderInput={(params) => (
+                    <>
+                      <TextField name="start" sx={time} {...params} />
+                    </>
+                  )}
+                />
+              ) : (
+                <p style={{ textAlign: "center" }}>Not Available</p>
+              )}
             </td>
             <td>
-              {" "}
-              <MobileTimePicker
-                // value={startTimeModel}
-                // onChange={startTime}
-                renderInput={(params) => (
-                  <>
-                    <TextField
-                      name="start"
-                      sx={time}
-                      {...params}
-                    />
-                  </>
-                )}
-              />
+              {saturday ? (
+                <MobileTimePicker
+                  value={saturdayTo}
+                  onChange={(value) => datePicker(value, "saturdayTo")}
+                  renderInput={(params) => (
+                    <>
+                      <TextField name="start" sx={time} {...params} />
+                    </>
+                  )}
+                />
+              ) : (
+                <p style={{ textAlign: "center" }}>Not Available</p>
+              )}
             </td>
           </tr>
           <tr>
             <td>
-              <RadioButtonUncheckedIcon />
+              {sunday ? (
+                <RadioButtonCheckedIcon
+                  onClick={() => changeAval("sunday")}
+                  sx={avalLight}
+                />
+              ) : (
+                <RadioButtonUncheckedIcon
+                  onClick={() => changeAval("sunday")}
+                />
+              )}
             </td>
             <td>Sun</td>
             <td>
-              {" "}
-              <MobileTimePicker
-                // value={startTimeModel}
-                // onChange={startTime}
-                renderInput={(params) => (
-                  <>
-                    <TextField
-                      name="start"
-                      sx={time}
-                      {...params}
-                    />
-                  </>
-                )}
-              />
+              {sunday ? (
+                <MobileTimePicker
+                  value={sundayFrom}
+                  onChange={(value) => datePicker(value, "sundayFrom")}
+                  renderInput={(params) => (
+                    <>
+                      <TextField name="start" sx={time} {...params} />
+                    </>
+                  )}
+                />
+              ) : (
+                <p style={{ textAlign: "center" }}>Not Available</p>
+              )}
             </td>
             <td>
-              {" "}
-              <MobileTimePicker
-                // value={startTimeModel}
-                // onChange={startTime}
-                renderInput={(params) => (
-                  <>
-                    <TextField
-                      name="start"
-                      sx={time}
-                      {...params}
-                    />
-                  </>
-                )}
-              />
+              {sunday ? (
+                <MobileTimePicker
+                  value={sundayTo}
+                  onChange={(value) => datePicker(value, "sundayTo")}
+                  renderInput={(params) => (
+                    <>
+                      <TextField name="start" sx={time} {...params} />
+                    </>
+                  )}
+                />
+              ) : (
+                <p style={{ textAlign: "center" }}>Not Available</p>
+              )}
             </td>
           </tr>
         </table>
+      </Grid>
+      <Grid item xs={12}>
+        <TextInput
+          rows={4}
+          multiline={true}
+          onChange={handleNotes}
+          value={notes ? notes : ""}
+          type="text"
+          helperText={"Enter any further information that is not listed above."}
+        />
+      </Grid>
+      <hr style={{ width: "90%", margin: "2em auto 1em auto" }} />
+      <Grid item xs={12} sx={checkboxes}>
+        <FormControlLabel
+          control={
+            <Checkbox
+              sx={checkBox}
+              onChange={(e) => {
+                handleCheckBox(e, "twentyFour");
+              }}
+              name="twentyFour"
+              value={twentyFour}
+              checked={twentyFour}
+            />
+          }
+          label="24 Hours Notice Required"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              sx={checkBox}
+              onChange={(e) => {
+                handleCheckBox(e, "appointment");
+              }}
+              name="appointment"
+              value={appointment}
+              checked={appointment}
+            />
+          }
+          label="Available By Appointment"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              sx={checkBox}
+              onChange={(e) => {
+                handleCheckBox(e, "contactMe");
+              }}
+              name="contactMe"
+              value={contactMe}
+              checked={contactMe}
+            />
+          }
+          label="Please Contact Me For My Availability"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              sx={checkBox}
+              onChange={(e) => {
+                handleCheckBox(e, "flexible");
+              }}
+              name="flexible"
+              value={flexible}
+              checked={flexible}
+            />
+          }
+          label="Flexible Hours By Appointment"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              sx={checkBox}
+              onChange={(e) => {
+                handleCheckBox(e, "shortNotice");
+              }}
+              name="shortNotice"
+              checked={shortNotice}
+            />
+          }
+          label="Pre Bookings Preferred, But Can Be Available At Short Notice"
+        />
+      </Grid>
+      <Grid item xs={12} align="center">
+        <Btn icon={<SaveIcon />} name="Save" function={handleSave} />
       </Grid>
     </>
   );
