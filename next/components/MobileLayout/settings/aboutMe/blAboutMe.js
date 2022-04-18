@@ -5,23 +5,32 @@ import useState from "react-usestateref";
 import { MenuItem } from "@mui/material";
 import axios from "axios";
 
-// import { create as ipfsHttpClient } from "ipfs-http-client";
-
 const blAboutMe = () => {
-  const [urls, setUrls, urlsRef] = useState([]);
+  const [userProfile, setUserProfile, userProfileRef] = useState({
+    age: undefined,
+    fName: "",
+    lName: "",
+    height: "",
+    hair: "",
+    bio: "",
+    title: "",
+    gender: "",
+    cup: "",
+    nationality: "",
+    country: "",
+    state: "",
+    city: "",
+    available: "",
+    bodyType: "",
+    eyes: "",
+  });
+
   const [gender, setGender] = useState("");
-  const [photos, setPhotos, photosRef] = useState([]);
+
   const [once, setOnce] = useState(false);
-  const { auth, user, throwMessage, loadingModelClose } =
-    useContext(AppContext);
+  const { auth, user, throwMessage } = useContext(AppContext);
   // const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
   const { setAuthSwitch } = bl();
-
-  useEffect(() => {
-    if (user._id) {
-      readPhotos();
-    }
-  }, []);
 
   useEffect(() => {
     if (user._id) {
@@ -39,6 +48,7 @@ const blAboutMe = () => {
             height: res.data.height,
             hair: res.data.hair,
             bio: res.data.bio,
+            title: res.data.title,
             cup: res.data.cup,
             gender: res.data.gender,
             nationality: res.data.nationality,
@@ -46,6 +56,8 @@ const blAboutMe = () => {
             state: res.data.state,
             city: res.data.city,
             available: res.data.available,
+            bodyType: res.data.bodyType,
+            eyes: res.data.eyes,
           }));
         })
         .catch((error) => {
@@ -55,38 +67,6 @@ const blAboutMe = () => {
     }
   }, []);
 
-  const readPhotos = () => {
-    axios
-      .get(
-        `${process.env.NEXT_PUBLIC_REACT_APP_SERVER_URL}/model/read/${user._id}/photos `
-      )
-      .then((res) => {
-        setPhotos(res.data.photos);
-        setTimeout(() => {
-          loadingModelClose();
-        }, 200);
-      })
-      .catch((error) => {
-        throwMessage("error", "Something went wrong", 3000);
-        setOnce(false);
-      });
-  };
-
-  const [userProfile, setUserProfile, userProfileRef] = useState({
-    age: undefined,
-    fName: "",
-    lName: "",
-    height: "",
-    hair: "",
-    bio: "",
-    gender: "",
-    cup: "",
-    nationality: "",
-    country: "",
-    state: "",
-    city: "",
-    available: "",
-  });
   const getAges = () => {
     let ages = [];
     for (let i = 18; i < 81; i++) {
@@ -141,6 +121,31 @@ const blAboutMe = () => {
     return hair;
   };
 
+  const getbodyType = () => {
+    const body = [
+      { value: "curvy", menu: "Curvy" },
+      { value: "athletic", menu: "Athletic" },
+      { value: "slim", menu: "Slim" },
+      { value: "voluptuous", menu: "Voluptuous" },
+      { value: "busty", menu: "Busty" },
+      { value: "bbw", menu: "BBW" },
+    ];
+    return body;
+  };
+
+  const getEyes = () => {
+    const eyes = [
+      { value: "brown", menu: "Brown" },
+      { value: "blue", menu: "Blue" },
+      { value: "green", menu: "Green" },
+      { value: "hazel", menu: "Hazel" },
+      { value: "blue/green", menu: "Blue/Green" },
+      { value: "black", menu: "Black" },
+      { value: "grey", menu: "Grey" },
+    ];
+    return eyes;
+  };
+
   const handleGender = (gender) => {
     switch (gender) {
       case "female":
@@ -165,8 +170,6 @@ const blAboutMe = () => {
     }
   };
 
- 
-
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -174,131 +177,6 @@ const blAboutMe = () => {
       ...prevState,
       [name]: value,
     }));
-  };
-
-  // const uploadSingleFile = async (e, index) => {
-
-  //   const size = e.target.files[0] ? e.target.files[0].size : 0;
-
-  //   if (size < 2000000) {
-
-  //     try {
-  //       const added = await client.add(e.target.files[0], {
-  //         progress: (prog) => console.log(`received: ${prog}`),
-  //       });
-  //       const url = `https://ipfs.infura.io/ipfs/${added.path}`;
-
-  //       setUrls((state) => [...state, { thumbnail: false, url: url }]);
-  //       photosRef.current.length > 0
-  //         ? setPhotos((oldArray) => [
-  //             ...oldArray,
-  //             { thumbnail: false, url: url },
-  //           ])
-  //         : setPhotos({ thumbnail: false, url: url });
-  //       callApi({ photos: photosRef.current });
-
-  //     } catch (error) {
-
-  //       throwMessage(
-  //         "warning","Error uploading file")
-
-  //       }
-
-  //   } else {
-  //     throwMessage(
-  //       "warning",
-  //       `File size size must be below 2mb, your file size is: ${(
-  //         size /
-  //         (1024 * 1024)
-  //       ).toFixed(2)}mb`,
-  //       3000
-  //     );
-  //   }
-  // };
-
-  const uploadSingleFile = (e, index) => {
-    const size = e.target.files[0] ? e.target.files[0].size : 0;
-
-    if (size < 7000000) {
-      const formData = new FormData();
-      formData.append("photo", e.target.files[0]);
-      axios
-        .post(
-          `${process.env.NEXT_PUBLIC_REACT_APP_SERVER_URL}/images `,
-          formData
-        )
-        .then((res) => {
-          setUrls((state) => [...state, { thumbnail: false, url: res.data }]);
-          photosRef.current.length > 0
-            ? setPhotos((oldArray) => [
-                ...oldArray,
-                { thumbnail: false, url: res.data },
-              ])
-            : setPhotos({ thumbnail: false, url: res.data });
-          callApi({ photos: photosRef.current });
-        })
-        .catch((error) => {
-          throwMessage("error", "Something went wrong", 3000);
-        });
-    } else {
-      throwMessage(
-        "warning",
-        `File size size must be below 2mb, your file size is: ${(
-          size /
-          (1024 * 1024)
-        ).toFixed(2)}mb`,
-        3000
-      );
-    }
-  };
-
-  // Handles changing boolean of main photo
-  const handleThumbnail = (mainUrl) => {
-    let myArray = photos;
-    let objIndex = myArray.findIndex((obj) => obj.thumbnail === true);
-
-    if (objIndex !== -1) {
-      myArray[objIndex].thumbnail = false;
-      setUrls(myArray);
-      setUserProfile((prevState) => ({
-        ...prevState,
-        photos: urlsRef.current,
-      }));
-    }
-
-    let myArray2 = photos;
-    let objIndex2 = myArray2.findIndex((obj) => obj.url === mainUrl.url);
-    myArray2[objIndex2].thumbnail = true;
-    setUrls(myArray2);
-    setUserProfile((prevState) => ({
-      ...prevState,
-      photos: urlsRef.current,
-    }));
-    handleSave();
-  };
-
-  // handles deleting individual photos
-  const deleteFile = (e) => {
-    const filtUrl = photos.filter((item) => item !== e);
-    const removeDuplicates = [...new Set(filtUrl)];
-    const formData = new FormData();
-    formData.set("oldUrl", e.url);
-    axios
-      .post(`${process.env.NEXT_PUBLIC_REACT_APP_SERVER_URL}/images `, formData)
-      .then(async (res) => {
-        setUrls(removeDuplicates);
-        setUserProfile((prevState) => ({
-          ...prevState,
-          photos: removeDuplicates,
-        }));
-        await handleSave();
-        setTimeout(() => {
-          readPhotos();
-        }, 3000);
-      })
-      .catch((error) => {
-        throwMessage("error", "Something went wrong", 3000);
-      });
   };
 
   const handleSave = (e) => {
@@ -332,18 +210,14 @@ const blAboutMe = () => {
   return {
     handlesetAvailable,
     handleSave,
-    deleteFile,
-    handleThumbnail,
-    uploadSingleFile,
     handleChange,
     handleGender,
     getHair,
     getBusts,
     getHeights,
+    getEyes,
+    getbodyType,
     getAges,
-    photos,
-    photosRef,
-    urls,
     userProfileRef,
     userProfile,
     gender,

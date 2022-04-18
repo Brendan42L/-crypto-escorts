@@ -15,6 +15,11 @@ const modelsSchema = new mongoose.Schema({
     default: false,
   },
 
+  bodyType: {
+    type: String,
+    trim: true,
+  },
+
   verifiedToken: {
     type: String,
   },
@@ -177,6 +182,10 @@ const modelsSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
+  contactInfoText: {
+    type: String,
+    trim: true,
+  },
 
   services: [],
   categories: [],
@@ -295,6 +304,14 @@ const modelsSchema = new mongoose.Schema({
     trim: true,
   },
   bio: {
+    type: String,
+    trim: true,
+  },
+  title: {
+    type: String,
+    trim: true,
+  },
+  eyes: {
     type: String,
     trim: true,
   },

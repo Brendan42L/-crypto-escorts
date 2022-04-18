@@ -16,6 +16,8 @@ const Contact = () => {
     onSave,
     handleChange,
     change,
+    moreInfo,
+    handleInfo
   } = bl();
 
   const myLoader = ({ src, width, quality }) => {
@@ -170,6 +172,18 @@ const Contact = () => {
             width="50px"
             objectFit="cover"
             quality={100}
+          />
+        </Grid>
+
+        <Grid item xs={12}>
+        <TextInput
+           multiline={true}
+           rows={5}
+            onChange={handleInfo}
+            value={moreInfo}
+            type="text"
+            label="Further Contact Information"
+            helperText="Further Contact Information"
           />
         </Grid>
 

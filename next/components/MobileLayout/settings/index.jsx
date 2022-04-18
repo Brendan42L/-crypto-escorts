@@ -7,6 +7,7 @@ import blAboutMe from "./aboutMe/blAboutMe";
 import styles from "../../../styles/Settings.module.css";
 import { styled } from "@mui/material/styles";
 
+import Photos from "./photos/index";
 import AboutMe from "./aboutMe/AboutMe";
 import Locations from "./locations/index";
 import Contact from "./contact/index";
@@ -30,6 +31,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import AddLocationIcon from "@mui/icons-material/AddLocation";
 import ContactPageIcon from "@mui/icons-material/ContactPage";
+import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 
 import {
   IconFlagUK,
@@ -313,6 +315,19 @@ const Settings = () => {
       {user.role === "model" && (
         <>
           <div className={styles.page}>
+            <Tooltip title="Photos">
+              <AddAPhotoIcon
+                sx={{
+                  cursor: "pointer",
+                  color: panel === 8 ? "#FC9918" : null,
+                  borderBottom: panel === 8 ? "1px solid #FC9918" : null,
+                  paddingBottom: panel === 8 ? "5px" : null,
+                }}
+                fontSize="large"
+                onClick={() => setPanel(8)}
+              />
+            </Tooltip>
+
             <Tooltip title="About Me">
               <PersonIcon
                 sx={{
@@ -389,6 +404,7 @@ const Settings = () => {
           </div>
 
           {user.role === "model" && <>{panel === 0 && <AboutMe />}</>}
+          {user.role === "model" && <>{panel === 8 && <Photos />}</>}
           {user.role === "model" && <>{panel === 1 && <Locations />}</>}
           {user.role === "model" && <>{panel === 2 && <Contact />}</>}
           {user.role === "model" && (

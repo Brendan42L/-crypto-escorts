@@ -11,6 +11,8 @@ const bl = () => {
   const [insta, setInsta] = useState("");
   const [current, setCurrent] = useState("twitter");
 
+  const [moreInfo, setMoreInfo] = useState("");
+  
   useEffect(() => {
     if (user._id) {
       fetchUser();
@@ -28,6 +30,7 @@ const bl = () => {
         setEmail(res.data.workEmail);
         setTwitter(res.data.twitter);
         setInsta(res.data.instagram);
+        setMoreInfo(res.data.contactInfoText);
       })
       .catch((error) => {
         throwMessage("error", "Something went wrong");
@@ -55,6 +58,10 @@ const bl = () => {
     }
   };
 
+  const handleInfo = (e) => {
+    setMoreInfo(e.target.value)
+  }
+
   const onSave = () => {
     const contactInfo = {
       website: website,
@@ -62,6 +69,7 @@ const bl = () => {
       workEmail: email,
       twitter: twitter,
       instagram: insta,
+      contactInfoText: moreInfo
     };
     axios
       .put(
@@ -107,6 +115,8 @@ const bl = () => {
     onSave,
     handleChange,
     change,
+    moreInfo,
+    handleInfo
   };
 };
 

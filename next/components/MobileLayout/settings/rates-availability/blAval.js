@@ -159,7 +159,6 @@ const blAval = () => {
         setContactMe(res.data.availability.contactMe);
         setFlexible(res.data.availability.flexible);
         setShortNotice(res.data.availability.shortNotice);
-
         setMondayFrom(res.data.availability.mondayFrom);
         setMondayTo(res.data.availability.mondayTo);
         setTuesdayFrom(res.data.availability.tuesdayFrom);
