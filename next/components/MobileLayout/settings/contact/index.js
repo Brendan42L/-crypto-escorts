@@ -1,7 +1,14 @@
 import React from "react";
 import bl from "./bl";
 import Image from "next/image";
-import { Grid } from "@mui/material";
+import {
+  Grid,
+  FormControl,
+  Radio,
+  RadioGroup,
+  FormLabel,
+  FormControlLabel,
+} from "@mui/material";
 import TextInput from "../../inputs/Input";
 import Btn from "../../btn/Save";
 
@@ -17,7 +24,10 @@ const Contact = () => {
     handleChange,
     change,
     moreInfo,
-    handleInfo
+    handleInfo,
+    pos,
+    handleRadio,
+    preferredContact,
   } = bl();
 
   const myLoader = ({ src, width, quality }) => {
@@ -37,6 +47,34 @@ const Contact = () => {
     cursor: "pointer",
   };
 
+  const inputLabel = {
+    margin: "1.2em 0 1em 0 ",
+    fontWeight: "400",
+    letterSpacing: "1px",
+    fontSize: "0.8em",
+    color: "RGB(255, 255, 255, 1)",
+    height: "10px !important",
+  };
+
+  const radio = {
+    color: "white",
+    "&.Mui-checked": {
+      color: "green",
+    },
+  };
+
+  const radiomargin = {
+    margin: "0 0 0 0",
+  };
+
+  const pcGrid = {
+    display: "grid",
+    gridTemplateColumns: "repeat(2, 1fr)",
+    gridTemplateRows: "repeat(2, 1fr)",
+    gridColumnGap: "0px",
+    gridRowGap: "5px",
+  };
+
   return (
     <>
       <Grid
@@ -49,6 +87,37 @@ const Contact = () => {
           <p style={warning}>
             All information entered below will be visible to clients
           </p>
+        </Grid>
+        <Grid item xs={12}>
+          <FormControl>
+            <RadioGroup
+              aria-labelledby="Place Of Service Radio Buttons"
+              row
+              name="pos"
+              value={pos}
+              onChange={handleRadio}
+            >
+              <FormControlLabel
+                value="incall"
+                control={<Radio sx={radio} />}
+                label="Incall"
+              />
+              <FormControlLabel
+                value="outcall"
+                control={<Radio sx={radio} />}
+                label="Outcall"
+              />
+              <FormControlLabel
+                value="incall/outcall"
+                control={<Radio sx={radio} />}
+                label="Incall & Outcall"
+                sx={radiomargin}
+              />
+            </RadioGroup>
+            <label htmlFor="Place Of Service" style={inputLabel}>
+              Place Of Service
+            </label>
+          </FormControl>
         </Grid>
         <Grid item xs={12}>
           <TextInput
@@ -176,18 +245,55 @@ const Contact = () => {
         </Grid>
 
         <Grid item xs={12}>
-        <TextInput
-           multiline={true}
-           rows={5}
+          <TextInput
+            multiline={true}
+            rows={5}
             onChange={handleInfo}
             value={moreInfo}
             type="text"
-            label="Further Contact Information"
-            helperText="Further Contact Information"
+            helperText={!moreInfo ? "" : "Further Contact Information Title"}
+            label={moreInfo ? "" : "Further Contact Information Title"}
           />
         </Grid>
 
-       
+        <Grid item xs={12}>
+          <FormControl>
+            <RadioGroup
+              aria-labelledby="Preferred Contact Radio Buttons"
+              name="pc"
+              value={preferredContact}
+              onChange={handleRadio}
+              sx={pcGrid}
+            >
+              <FormControlLabel
+                value="sms"
+                control={<Radio sx={radio} />}
+                label="SMS Only"
+              />
+              <FormControlLabel
+                value="form"
+                control={<Radio sx={radio} />}
+                label="Contact Form"
+              />
+              <FormControlLabel
+                value="social"
+                control={<Radio sx={radio} />}
+                label="Social Media"
+              />
+              <FormControlLabel
+                value="any"
+                control={<Radio sx={radio} />}
+                label="I Don't Mind"
+              />
+            </RadioGroup>
+            <label
+              htmlFor=" Preferred Method Of Contact For Clients"
+              style={inputLabel}
+            >
+              Preferred Method Of Contact For Clients
+            </label>
+          </FormControl>
+        </Grid>
 
         <Grid item xs={12} sx={{ margin: "2em 0 0 0" }}>
           <Btn function={onSave} name={"Save All"} />

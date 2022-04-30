@@ -3,7 +3,17 @@ import Selects from "../../inputs/Selects";
 import TextInput from "../../inputs/Input";
 import Btn from "../../btn/Save";
 import bl from "./blRates";
-import { MenuItem, Grid, InputAdornment, TextField, Chip } from "@mui/material";
+import locations from "../aboutMe/locations";
+import {
+  MenuItem,
+  Grid,
+  InputAdornment,
+  TextField,
+  Chip,
+  Checkbox,
+  FormControlLabel,
+} from "@mui/material";
+
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import AddIcon from "@mui/icons-material/Add";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -67,6 +77,18 @@ const warningText = {
   textAlign: "center",
   lineHeight: "1.6em",
 };
+const checkBox = {
+  color: "white",
+  "&.Mui-checked": {
+    color: "red ",
+  },
+};
+
+const toursWrapper = {
+  margin: "0 auto 2em auto",
+  display: "flex",
+  justifyContent: "space-evenly",
+};
 
 const Rates = () => {
   const {
@@ -88,68 +110,178 @@ const Rates = () => {
     warning,
     selected,
     save,
+    handleCheckBox,
+    touringRate,
+    flyMeRate,
+    state,
+    city,
+    handleLocation,
+    handleCity,
+    handleCountry,
+    country,
+    tours,
+    handleTour,
+    selectedCities,
+    flyMeRates,
+    touringRates,
+    deleteRowTouring,
+    deleteRowFly,
   } = bl();
+
+  const {
+    getCountries,
+    getCitiesOfState,
+    statesOfAustralia,
+    statesOfNewZealand,
+    statesOfUK,
+    statesOfSinapore,
+  } = locations();
 
   return (
     <>
       <Grid item xs={12} align="center">
-        {rates.length ? (
-          <>
-            <h3 style={info}>Your Rates</h3>
+        {rates.length > 0 && <h3 style={info}>Permanent City Rates</h3>}
 
-            <table className={styles.tableRates}>
-              <tr>
-                <th>Time</th>
-                <th>Rate</th>
-                <th>Info</th>
-              </tr>
-              {rates
-                .sort((a, b) => a.duration - b.duration)
-                .map((rate, index) => (
-                  <>
-                    <tr>
-                      <td onClick={() => handleDeleteSelect(index)}>
-                        {rate.duration}
-                      </td>
-                      <td onClick={() => handleDeleteSelect(index)}>
-                        {rate.price}
-                      </td>
-                      <td onClick={() => handleDeleteSelect(index)}>
-                        {rate.extra}
-                      </td>
+        {rates.length > 0 && (
+          <table className={styles.tableRates}>
+            <tr>
+              <th>Time</th>
+              <th>Rate</th>
+              <th>Info</th>
+            </tr>
+            {rates
+              .sort((a, b) => a.duration - b.duration)
+              .map((rate, index) => (
+                <>
+                  <tr>
+                    <td onClick={() => handleDeleteSelect(index, "rates")}>
+                      {rate.duration}
+                    </td>
+                    <td onClick={() => handleDeleteSelect(index, "rates")}>
+                      {rate.price}
+                    </td>
+                    <td onClick={() => handleDeleteSelect(index, "rates")}>
+                      {rate.extra}
+                    </td>
 
-                      {deleteRow === index ? (
-                        <td>
-                          <ClearIcon
-                            sx={{ color: "red" }}
-                            onClick={() => handleDelete(rate.id)}
-                          />
-                        </td>
-                      ) : null}
-                    </tr>
-                  </>
-                ))}
-            </table>
-            <Grid item xs={12}>
-              <TextInput
-                multiline={true}
-                rows={4}
-                onChange={handleExtraNotes}
-                name="extraNotes"
-                value={extraNotes ? extraNotes : ""}
-                type="text"
-                helperText={
-                  "Enter any further information or rates that are not listed above."
-                }
-              />
-            </Grid>
-            <Grid item xs={12} align="center" sx={{ marginTop: "2em" }}>
-              <Btn function={() => save()} name={"SAVE RATES"} />
-            </Grid>
-          </>
-        ) : (
-          <h3>No Rates To Display</h3>
+                    {deleteRow === index ? (
+                      <td>
+                        <ClearIcon
+                          sx={{ color: "red" }}
+                          onClick={() => handleDelete(rate.id, "rates")}
+                        />
+                      </td>
+                    ) : null}
+                  </tr>
+                </>
+              ))}
+          </table>
         )}
+
+        {touringRates.length > 0 && <h3 style={info}>Touring Rates</h3>}
+
+        {touringRates.length > 0 && (
+          <table className={styles.tableRates}>
+            <tr>
+              <th>Time</th>
+              <th>Rate</th>
+
+              <th>City</th>
+              <th>Info</th>
+            </tr>
+            {touringRates
+              .sort((a, b) => a.price - b.price)
+              .map((rate, index) => (
+                <>
+                  <tr>
+                    <td
+                      onClick={() => handleDeleteSelect(index, "touringRates")}
+                    >
+                      {rate.duration}
+                    </td>
+                    <td
+                      onClick={() => handleDeleteSelect(index, "touringRates")}
+                    >
+                      {rate.price}
+                    </td>
+
+                    <td
+                      onClick={() => handleDeleteSelect(index, "touringRates")}
+                    >
+                      {rate.cities.map((item) => item.city)}
+                    </td>
+                    <td
+                      onClick={() => handleDeleteSelect(index, "touringRates")}
+                    >
+                      {rate.extra}
+                    </td>
+
+                    {deleteRowTouring === index ? (
+                      <td>
+                        <ClearIcon
+                          sx={{ color: "red" }}
+                          onClick={() => handleDelete(rate.id, "touringRates")}
+                        />
+                      </td>
+                    ) : null}
+                  </tr>
+                </>
+              ))}
+          </table>
+        )}
+
+        {flyMeRates.length > 0 && <h3 style={info}>Fly Me To You Rates</h3>}
+
+        {flyMeRates.length > 0 && (
+          <table className={styles.tableRates}>
+            <tr>
+              <th>Rate</th>
+              <th>City</th>
+              <th>Info</th>
+            </tr>
+            {flyMeRates
+              .sort((a, b) => a.price - b.price)
+              .map((rate, index) => (
+                <>
+                  <tr>
+                    <td onClick={() => handleDeleteSelect(index, "flyMeRates")}>
+                      {rate.price}
+                    </td>
+
+                    <td onClick={() => handleDeleteSelect(index, "flyMeRates")}>
+                      {rate.city}
+                    </td>
+                    <td onClick={() => handleDeleteSelect(index, "flyMeRates")}>
+                      {rate.extra}
+                    </td>
+                    {deleteRowFly === index ? (
+                      <td>
+                        <ClearIcon
+                          sx={{ color: "red" }}
+                          onClick={() => handleDelete(rate.id, "flyMeRates")}
+                        />
+                      </td>
+                    ) : null}
+                  </tr>
+                </>
+              ))}
+          </table>
+        )}
+
+        <Grid item xs={12} sx={{ marginTop: "2em" }}>
+          <TextInput
+            multiline={true}
+            rows={4}
+            onChange={handleExtraNotes}
+            onBlur={save}
+            name="extraNotes"
+            value={extraNotes ? extraNotes : ""}
+            type="text"
+            helperText={
+              "Enter any further information or rates that are not listed above."
+            }
+          />
+        </Grid>
       </Grid>
 
       <Grid item xs={12} align="center">
@@ -203,6 +335,140 @@ const Rates = () => {
         />
       </Grid>
 
+      <Grid item xs={12} align="center" sx={{ margin: "1em auto" }}>
+        <FormControlLabel
+          control={
+            <Checkbox
+              sx={checkBox}
+              onChange={handleCheckBox}
+              name="flyMeRate"
+              value={flyMeRate}
+              checked={flyMeRate}
+            />
+          }
+          label="Fly Me To You Rate"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              sx={checkBox}
+              onChange={handleCheckBox}
+              name="touringRate"
+              value={touringRate}
+              checked={touringRate}
+            />
+          }
+          label="Touring Rate"
+        />
+      </Grid>
+
+      {flyMeRate ? (
+        <Grid item xs={12}>
+          <Selects
+            id="country"
+            helperText={"Which country are you based in ?"}
+            labelId="country"
+            value={country ? country : ""}
+            label="Country"
+            name="countries"
+            onChange={handleCountry}
+            select={getCountries().map((item, index) => (
+              <MenuItem value={item.value} key={index}>
+                {item.menu}
+              </MenuItem>
+            ))}
+          />
+
+          <Selects
+            id="states"
+            helperText={"State"}
+            labelId="states"
+            value={state}
+            label="State"
+            name="states"
+            onChange={handleLocation}
+            select={
+              country === "AU"
+                ? statesOfAustralia.map((item, i) => (
+                    <MenuItem key={i} value={item.isoCode}>
+                      {item.name}
+                    </MenuItem>
+                  ))
+                : country === "GB"
+                ? statesOfUK.map((item, i) => (
+                    <MenuItem key={i} value={item.isoCode}>
+                      {item.name}
+                    </MenuItem>
+                  ))
+                : country === "NZ"
+                ? statesOfNewZealand.map((item, i) => (
+                    <MenuItem key={i} value={item.isoCode}>
+                      {item.name}
+                    </MenuItem>
+                  ))
+                : country === "SG"
+                ? statesOfSinapore.map((item, i) => (
+                    <MenuItem key={i} value={item.isoCode}>
+                      {item.name}
+                    </MenuItem>
+                  ))
+                : null
+            }
+          />
+          <Selects
+            multiple={true}
+            helperText="City"
+            id="city"
+            labelId="city"
+            value={city}
+            label="City"
+            name="city"
+            onChange={handleCity}
+            select={getCitiesOfState(country, state)}
+          />
+        </Grid>
+      ) : null}
+
+      {touringRate ? (
+        <>
+          <Grid item xs={12} sx={toursWrapper}>
+            {tours.length ? (
+              tours.map((tour) => (
+                <Chip
+                  onClick={() => handleTour(tour.tourId, tour.city)}
+                  sx={{
+                    color: selectedCities.find(
+                      (item) => item.tourId === tour.tourId
+                    )
+                      ? "orange"
+                      : "white",
+                    border: selectedCities.find(
+                      (item) => item.tourId === tour.tourId
+                    )
+                      ? "1px solid orange"
+                      : "1px solid white",
+                  }}
+                  label={tour.city}
+                  variant="outlined"
+                />
+              ))
+            ) : (
+              <p>No Tours Created</p>
+            )}
+          </Grid>
+          <p
+            style={{
+              textAlign: "center",
+              margin: "0 auto 2em auto",
+              fontWeight: "300",
+              letterSpacing: "1px",
+            }}
+          >
+            Which Cities Would You Like This Rate To Apply To ?
+          </p>
+        </>
+      ) : null}
+
       <Grid item xs={12} align="center">
         <Btn
           icon={<AddIcon />}
@@ -211,6 +477,7 @@ const Rates = () => {
         />
       </Grid>
 
+      <hr style={{ width: "90%", margin: "2em auto 0 auto" }} />
       <Grid item xs={12} align="center">
         {warning ? (
           <Grid item xs={12} align="center">

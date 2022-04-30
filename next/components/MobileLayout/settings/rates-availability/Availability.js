@@ -2,13 +2,11 @@ import styles from "./ratesAvailability.module.css";
 
 import bl from "./blAval";
 import {
-  MenuItem,
   Grid,
-  InputAdornment,
   TextField,
   Checkbox,
   FormControlLabel,
-  FormGroup,
+  Button,
 } from "@mui/material";
 import MobileTimePicker from "@mui/lab/MobileTimePicker";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
@@ -16,6 +14,8 @@ import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import TextInput from "../../inputs/Input";
 import Btn from "../../btn/Save";
 import SaveIcon from "@mui/icons-material/Save";
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+
 
 const time = {
   color: "#FFF !important",
@@ -88,10 +88,14 @@ const Availability = () => {
     saturday,
     sunday,
     changeAval,
+    applyAll,
   } = bl();
 
   return (
     <>
+      <Grid item xs={12} align="center">
+        <Button sx={{color: "white", borderBottom: "1px solid white", borderRadius: "0"}} endIcon={<ContentCopyIcon sx={{color: "grey"}}/>} onClick={applyAll} >Apply All</Button>
+      </Grid>
       <Grid item xs={12} sx={{ marginTop: "1.5em" }}>
         <table className={styles.tableRates}>
           <tr>

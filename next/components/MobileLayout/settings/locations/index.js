@@ -138,7 +138,7 @@ const Locations = () => {
             <Grid item xs={6}>
               <Selects
                 id="states"
-                helperText={"Which state are you based in ?"}
+                helperText={"State"}
                 labelId="states"
                 value={
                   currentCity === 1
@@ -188,7 +188,7 @@ const Locations = () => {
             <Grid item xs={6}>
               <Selects
                 multiple={true}
-                helperText="Which ci"
+                helperText="City"
                 id="city"
                 labelId="city"
                 value={

@@ -12,7 +12,10 @@ const bl = () => {
   const [current, setCurrent] = useState("twitter");
 
   const [moreInfo, setMoreInfo] = useState("");
-  
+
+  const [pos, setPos] = useState("");
+  const [preferredContact, setPreferredContact] = useState("");
+
   useEffect(() => {
     if (user._id) {
       fetchUser();
@@ -31,6 +34,8 @@ const bl = () => {
         setTwitter(res.data.twitter);
         setInsta(res.data.instagram);
         setMoreInfo(res.data.contactInfoText);
+        setPos(res.data.placeOfService);
+        setPreferredContact(res.data.preferredContact);
       })
       .catch((error) => {
         throwMessage("error", "Something went wrong");
@@ -59,8 +64,8 @@ const bl = () => {
   };
 
   const handleInfo = (e) => {
-    setMoreInfo(e.target.value)
-  }
+    setMoreInfo(e.target.value);
+  };
 
   const onSave = () => {
     const contactInfo = {
@@ -69,7 +74,9 @@ const bl = () => {
       workEmail: email,
       twitter: twitter,
       instagram: insta,
-      contactInfoText: moreInfo
+      contactInfoText: moreInfo,
+      placeOfService: pos,
+      preferredContact: preferredContact,
     };
     axios
       .put(
@@ -105,6 +112,12 @@ const bl = () => {
     }
   };
 
+  const handleRadio = (e) => {
+    if (e.target.name === "pos") {
+      setPos(e.target.value);
+    } else if (e.target.name === "pc") setPreferredContact(e.target.value);
+  };
+
   return {
     website,
     phone,
@@ -116,7 +129,10 @@ const bl = () => {
     handleChange,
     change,
     moreInfo,
-    handleInfo
+    handleInfo,
+    pos,
+    handleRadio,
+    preferredContact,
   };
 };
 

@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@mui/styles";
 import bl from "./bl";
 import Btn from "../../btn/Save";
+import TextInput from "../../inputs/Input";
 import {
   Chip,
   Select,
@@ -66,6 +67,8 @@ const ServicesCategories = () => {
     categorie,
     services,
     onSave,
+    servicesInfo,
+    handleTextField,
   } = bl();
 
   const ITEM_HEIGHT = 100;
@@ -153,6 +156,18 @@ const ServicesCategories = () => {
               ))}
             </Select>
           </FormControl>
+        </Grid>
+        <Grid item xs={12}>
+          <TextInput
+            multiline={true}
+            rows={6}
+            onChange={handleTextField}
+            name="servicesInfo"
+            value={servicesInfo ? servicesInfo : ""}
+            label={!servicesInfo && "Enter any further services information"}
+            helperText={servicesInfo && "Enter any further services information"}
+            type="text"
+          />
         </Grid>
         <Grid item xs={12} align="center">
           <Btn function={() => onSave("services")} name={"Save"} />

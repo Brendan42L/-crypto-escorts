@@ -186,10 +186,24 @@ const modelsSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
+  placeOfService: {
+    type: String,
+    trim: true,
+  },
+  preferredContact: {
+    type: String,
+    trim: true,
+  },
+  servicesInfo: {
+    type: String,
+    trim: true,
+  },
 
   services: [],
   categories: [],
   rates: [],
+  flyMeRates: [],
+  touringRates: [],
   availability: {
     mondayFrom: {
       type: String,

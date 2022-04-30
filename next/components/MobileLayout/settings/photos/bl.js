@@ -9,7 +9,6 @@ const bl = () => {
   const [photos, setPhotos, photosRef] = useState([]);
   const [urls, setUrls, urlsRef] = useState([]);
   const [once, setOnce] = useState(false);
-  
 
   const [userProfile, setUserProfile, userProfileRef] = useState({});
   const { user, throwMessage, loadingModelClose } = useContext(AppContext);

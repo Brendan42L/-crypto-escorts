@@ -33,13 +33,13 @@ const blAval = () => {
   const [shortNotice, setShortNotice] = useState(false);
 
   // active days
-  const [monday, setMonday] = useState(true);
-  const [tuesday, setTuesday] = useState(true);
-  const [wednesday, setWednesday] = useState(true);
-  const [thursday, setThursday] = useState(true);
-  const [friday, setFriday] = useState(true);
-  const [saturday, setSaturday] = useState(true);
-  const [sunday, setSunday] = useState(true);
+  const [monday, setMonday] = useState(false);
+  const [tuesday, setTuesday] = useState(false);
+  const [wednesday, setWednesday] = useState(false);
+  const [thursday, setThursday] = useState(false);
+  const [friday, setFriday] = useState(false);
+  const [saturday, setSaturday] = useState(false);
+  const [sunday, setSunday] = useState(false);
 
   const handleCheckBox = (event, name) => {
     switch (name) {
@@ -176,25 +176,46 @@ const blAval = () => {
         setNotes(res.data.availability.notes);
 
         setMonday(
-          res.data.availability.mondayFrom === "Not Available" ? false : true
+          res.data.availability.mondayFrom === "Not Available" ||
+            res.data.availability.mondayFrom === undefined
+            ? false
+            : true
         );
         setTuesday(
-          res.data.availability.tuesdayFrom === "Not Available" ? false : true
+          res.data.availability.tuesdayFrom === "Not Available" ||
+            res.data.availability.mondayFrom === undefined
+            ? false
+            : true
         );
         setWednesday(
-          res.data.availability.wednesdayFrom === "Not Available" ? false : true
+          res.data.availability.wednesdayFrom === "Not Available" ||
+            res.data.availability.mondayFrom === undefined
+            ? false
+            : true
         );
         setThursday(
-          res.data.availability.thursdayFrom === "Not Available" ? false : true
+          res.data.availability.thursdayFrom === "Not Available" ||
+            res.data.availability.mondayFrom === undefined
+            ? false
+            : true
         );
         setFriday(
-          res.data.availability.fridayFrom === "Not Available" ? false : true
+          res.data.availability.fridayFrom === "Not Available" ||
+            res.data.availability.mondayFrom === undefined
+            ? false
+            : true
         );
         setSaturday(
-          res.data.availability.saturdayFrom === "Not Available" ? false : true
+          res.data.availability.saturdayFrom === "Not Available" ||
+            res.data.availability.mondayFrom === undefined
+            ? false
+            : true
         );
         setSunday(
-          res.data.availability.sundayFrom === "Not Available" ? false : true
+          res.data.availability.sundayFrom === "Not Available" ||
+            res.data.availability.mondayFrom === undefined
+            ? false
+            : true
         );
       })
       .catch((error) => {
@@ -237,6 +258,55 @@ const blAval = () => {
       });
   };
 
+  const applyAll = () => {
+    if (
+      mondayFrom === undefined ||
+      mondayFrom === "Not Available" ||
+      mondayTo === "Not Available" ||
+      mondayTo === undefined
+    ) {
+      throwMessage("warning", "Please fill in MONDAY to use APPLY ALL feature");
+    } else {
+      setMondayFrom(mondayFrom);
+      setMondayTo(mondayTo);
+      setTuesdayFrom(mondayFrom);
+      setTuesdayTo(mondayTo);
+      setWednesdayFrom(mondayFrom);
+      setWednesdayTo(mondayTo);
+      setThursdayFrom(mondayFrom);
+      setThursdayTo(mondayTo);
+      setFridayFrom(mondayFrom);
+      setFridayTo(mondayTo);
+      setSaturdayFrom(mondayFrom);
+      setSaturdayTo(mondayTo);
+      setSundayFrom(mondayFrom);
+      setSundayTo(mondayTo);
+
+      for (let i = 0; i < 7; i++) {
+        switch (i) {
+          case 1:
+            changeAval("tuesday");
+            break;
+          case 2:
+            changeAval("wednesday");
+            break;
+          case 3:
+            changeAval("thursday");
+            break;
+          case 4:
+            changeAval("friday");
+            break;
+          case 5:
+            changeAval("saturday");
+            break;
+          case 6:
+            changeAval("sunday");
+            break;
+        }
+      }
+    }
+  };
+
   return {
     mondayFrom,
     mondayTo,
@@ -270,6 +340,7 @@ const blAval = () => {
     saturday,
     sunday,
     changeAval,
+    applyAll,
   };
 };
 

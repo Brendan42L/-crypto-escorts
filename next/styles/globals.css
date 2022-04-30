@@ -12,14 +12,7 @@ body {
   margin: 0;
 
   font-family: "Roboto", sans-serif;
-  background-image: radial-gradient(
-    circle,
-    #000000,
-    #130109,
-    #1c0314,
-    #21061f,
-    #230a2b
-  );
+  background-image: radial-gradient(circle, #323232, #272727, #1c1c1c, #111111, #000000);
   height: auto;
   background-repeat: no-repeat;
   background-size: contain;

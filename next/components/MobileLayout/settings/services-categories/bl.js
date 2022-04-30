@@ -9,12 +9,18 @@ const bl = () => {
   const [categories, setCategories, categoriesRef] = useState([]);
   const [service, setService, serviceRef] = useState([]);
   const { throwMessage, user } = useContext(AppContext);
+  const [servicesInfo, setServicesInfo] = useState("");
 
   useEffect(() => {
     if (user._id) {
       fetchUser();
     }
   }, []);
+
+  const handleTextField = (e) => {
+    setServicesInfo(e.target.value);
+  };
+
   const handleChange = (event) => {
     const {
       target: { value },
@@ -35,24 +41,28 @@ const bl = () => {
   };
   const onSave = (input) => {
     if (input === "categories") {
-      callApi({ categories: categories });
+      callApi({ categories: categories }, false);
     } else if (input === "services") {
-      callApi({ services: service });
+      callApi({ services: service }, false);
+      callApi({ servicesInfo: servicesInfo }, true);
     }
   };
-  const callApi = (data) => {
+  const callApi = (data, set) => {
     axios
       .put(
-        `${process.env.NEXT_PUBLIC_REACT_APP_SERVER_URL}/model/update/servicesCatergories`,
+        `${process.env.NEXT_PUBLIC_REACT_APP_SERVER_URL}/model/update/${
+          !set ? "servicesCatergories" : ""
+        }`,
         data
       )
       .then((res) => {
-        throwMessage("success", "Updated");
+        !set && throwMessage("success", "Updated");
       })
       .catch((error) => {
         throwMessage("error", "Something went wrong");
       });
   };
+
   const fetchUser = () => {
     axios
       .get(
@@ -61,6 +71,7 @@ const bl = () => {
       .then((res) => {
         setService(res.data.services);
         setCategories(res.data.categories);
+        setServicesInfo(res.data.servicesInfo);
       })
       .catch((error) => {
         throwMessage("error", "Something went wrong");
@@ -75,6 +86,8 @@ const bl = () => {
     categoriesRef,
     serviceRef,
     handleChangeService,
+    servicesInfo,
+    handleTextField,
   };
 };
 
