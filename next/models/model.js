@@ -198,7 +198,7 @@ const modelsSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
-
+  wishList: [],
   services: [],
   categories: [],
   rates: [],

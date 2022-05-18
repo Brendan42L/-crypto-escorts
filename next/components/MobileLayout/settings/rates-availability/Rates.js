@@ -477,7 +477,7 @@ const Rates = () => {
         />
       </Grid>
 
-      <hr style={{ width: "90%", margin: "2em auto 0 auto" }} />
+      {/* <hr style={{ width: "90%", margin: "2em auto 0 auto" }} />
       <Grid item xs={12} align="center">
         {warning ? (
           <Grid item xs={12} align="center">
@@ -533,7 +533,7 @@ const Rates = () => {
           }}
           label="$$$$"
         />
-      </Grid>
+      </Grid> */}
     </>
   );
 };
