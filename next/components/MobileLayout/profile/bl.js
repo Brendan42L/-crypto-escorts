@@ -72,6 +72,7 @@ const bl = () => {
         `${process.env.NEXT_PUBLIC_REACT_APP_SERVER_URL}/model/read/${modelId} `
       )
       .then(async (res) => {
+        console.log("check here",res.data)
         const _model = {
           fName: res.data.fName,
           lName: res.data.lName,

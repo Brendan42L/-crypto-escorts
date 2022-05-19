@@ -113,6 +113,7 @@ const Rates = () => {
     handleCheckBox,
     touringRate,
     flyMeRate,
+    permanentRate,
     state,
     city,
     handleLocation,
@@ -140,200 +141,173 @@ const Rates = () => {
   return (
     <>
       <Grid item xs={12} align="center">
-        {rates.length > 0 && <h3 style={info}>Permanent City Rates</h3>}
-
-        {rates.length > 0 && (
-          <table className={styles.tableRates}>
-            <tr>
-              <th>Time</th>
-              <th>Rate</th>
-              <th>Info</th>
-            </tr>
-            {rates
-              .sort((a, b) => a.duration - b.duration)
-              .map((rate, index) => (
-                <>
-                  <tr>
-                    <td onClick={() => handleDeleteSelect(index, "rates")}>
-                      {rate.duration}
-                    </td>
-                    <td onClick={() => handleDeleteSelect(index, "rates")}>
-                      {rate.price}
-                    </td>
-                    <td onClick={() => handleDeleteSelect(index, "rates")}>
-                      {rate.extra}
-                    </td>
-
-                    {deleteRow === index ? (
-                      <td>
-                        <ClearIcon
-                          sx={{ color: "red" }}
-                          onClick={() => handleDelete(rate.id, "rates")}
-                        />
+        {touringRates.length || flyMeRates.length || rates.length > 0 ? (
+          <>
+            <h3 style={info}>Permanent City Rates</h3>
+            <table className={styles.tableRates}>
+              <tr>
+                <th>Time</th>
+                <th>Rate</th>
+                <th>Info</th>
+              </tr>
+              {rates
+                .sort((a, b) => a.duration - b.duration)
+                .map((rate, index) => (
+                  <>
+                    <tr>
+                      <td onClick={() => handleDeleteSelect(index, "rates")}>
+                        {rate.duration}
                       </td>
-                    ) : null}
+                      <td onClick={() => handleDeleteSelect(index, "rates")}>
+                        {rate.price}
+                      </td>
+                      <td onClick={() => handleDeleteSelect(index, "rates")}>
+                        {rate.extra}
+                      </td>
+
+                      {deleteRow === index ? (
+                        <td>
+                          <ClearIcon
+                            sx={{ color: "red" }}
+                            onClick={() => handleDelete(rate.id, "rates")}
+                          />
+                        </td>
+                      ) : null}
+                    </tr>
+                  </>
+                ))}
+            </table>
+
+            <h3 style={info}>Fly Me To You Rates</h3>
+
+            <table className={styles.tableRates}>
+              <tr>
+                <th>Rate</th>
+                <th>City</th>
+                <th>Info</th>
+              </tr>
+              {flyMeRates
+                .sort((a, b) => a.price - b.price)
+                .map((rate, index) => (
+                  <>
+                    <tr>
+                      <td
+                        onClick={() => handleDeleteSelect(index, "flyMeRates")}
+                      >
+                        {rate.price}
+                      </td>
+
+                      <td
+                        onClick={() => handleDeleteSelect(index, "flyMeRates")}
+                      >
+                        {rate.city}
+                      </td>
+                      <td
+                        onClick={() => handleDeleteSelect(index, "flyMeRates")}
+                      >
+                        {rate.extra}
+                      </td>
+                      {deleteRowFly === index ? (
+                        <td>
+                          <ClearIcon
+                            sx={{ color: "red" }}
+                            onClick={() => handleDelete(rate.id, "flyMeRates")}
+                          />
+                        </td>
+                      ) : null}
+                    </tr>
+                  </>
+                ))}
+            </table>
+
+            {tours.length > 0 ? (
+              <>
+                <h3 style={info}>Touring Rates</h3>
+                <table className={styles.tableRates}>
+                  <tr>
+                    <th>Time</th>
+                    <th>Rate</th>
+                    <th>Info</th>
+                    <th>Cities</th>
                   </tr>
-                </>
-              ))}
-          </table>
+                  {touringRates
+                    .sort((a, b) => a.price - b.price)
+                    .map((rate, index) => (
+                      <>
+                        <tr>
+                          <td
+                            onClick={() =>
+                              handleDeleteSelect(index, "touringRates")
+                            }
+                          >
+                            {rate.duration}
+                          </td>
+
+                          <td
+                            onClick={() =>
+                              handleDeleteSelect(index, "touringRates")
+                            }
+                          >
+                            {rate.price}
+                          </td>
+                          <td
+                            onClick={() =>
+                              handleDeleteSelect(index, "touringRates")
+                            }
+                          >
+                            {rate.extra}
+                          </td>
+                          <td
+                            onClick={() =>
+                              handleDeleteSelect(index, "touringRates")
+                            }
+                          >
+                            {rate.cities.map(
+                              (a, index) => (index ? ", " : "") + a.city
+                            )}
+                          </td>
+                          {deleteRowFly === index ? (
+                            <td>
+                              <ClearIcon
+                                sx={{ color: "red" }}
+                                onClick={() =>
+                                  handleDelete(rate.id, "touringRates")
+                                }
+                              />
+                            </td>
+                          ) : null}
+                        </tr>
+                      </>
+                    ))}
+                </table>{" "}
+              </>
+            ) : null}
+          </>
+        ) : (
+          <p>No Rates To Display</p>
         )}
 
-        {touringRates.length > 0 && <h3 style={info}>Touring Rates</h3>}
-
-        {touringRates.length > 0 && (
-          <table className={styles.tableRates}>
-            <tr>
-              <th>Time</th>
-              <th>Rate</th>
-
-              <th>City</th>
-              <th>Info</th>
-            </tr>
-            {touringRates
-              .sort((a, b) => a.price - b.price)
-              .map((rate, index) => (
-                <>
-                  <tr>
-                    <td
-                      onClick={() => handleDeleteSelect(index, "touringRates")}
-                    >
-                      {rate.duration}
-                    </td>
-                    <td
-                      onClick={() => handleDeleteSelect(index, "touringRates")}
-                    >
-                      {rate.price}
-                    </td>
-
-                    <td
-                      onClick={() => handleDeleteSelect(index, "touringRates")}
-                    >
-                      {rate.cities.map((item) => item.city)}
-                    </td>
-                    <td
-                      onClick={() => handleDeleteSelect(index, "touringRates")}
-                    >
-                      {rate.extra}
-                    </td>
-
-                    {deleteRowTouring === index ? (
-                      <td>
-                        <ClearIcon
-                          sx={{ color: "red" }}
-                          onClick={() => handleDelete(rate.id, "touringRates")}
-                        />
-                      </td>
-                    ) : null}
-                  </tr>
-                </>
-              ))}
-          </table>
-        )}
-
-        {flyMeRates.length > 0 && <h3 style={info}>Fly Me To You Rates</h3>}
-
-        {flyMeRates.length > 0 && (
-          <table className={styles.tableRates}>
-            <tr>
-              <th>Rate</th>
-              <th>City</th>
-              <th>Info</th>
-            </tr>
-            {flyMeRates
-              .sort((a, b) => a.price - b.price)
-              .map((rate, index) => (
-                <>
-                  <tr>
-                    <td onClick={() => handleDeleteSelect(index, "flyMeRates")}>
-                      {rate.price}
-                    </td>
-
-                    <td onClick={() => handleDeleteSelect(index, "flyMeRates")}>
-                      {rate.city}
-                    </td>
-                    <td onClick={() => handleDeleteSelect(index, "flyMeRates")}>
-                      {rate.extra}
-                    </td>
-                    {deleteRowFly === index ? (
-                      <td>
-                        <ClearIcon
-                          sx={{ color: "red" }}
-                          onClick={() => handleDelete(rate.id, "flyMeRates")}
-                        />
-                      </td>
-                    ) : null}
-                  </tr>
-                </>
-              ))}
-          </table>
-        )}
-
-        <Grid item xs={12} sx={{ marginTop: "2em" }}>
-          <TextInput
-            multiline={true}
-            rows={4}
-            onChange={handleExtraNotes}
-            onBlur={save}
-            name="extraNotes"
-            value={extraNotes ? extraNotes : ""}
-            type="text"
-            helperText={
-              "Enter any further information or rates that are not listed above."
-            }
-          />
-        </Grid>
+        {touringRates.length || flyMeRates.length || rates.length ? (
+          <Grid item xs={12} sx={{ marginTop: "2em" }}>
+            <TextInput
+              multiline={true}
+              rows={4}
+              onChange={handleExtraNotes}
+              onBlur={save}
+              name="extraNotes"
+              value={extraNotes ? extraNotes : ""}
+              type="text"
+              helperText={
+                "Enter any further information or rates that are not listed above."
+              }
+            />
+          </Grid>
+        ) : null}
       </Grid>
 
-      <Grid item xs={12} align="center">
-        <p style={info}>Create Your Own Custom Rates</p>
-      </Grid>
-
-      <Grid item xs={6}>
-        <Selects
-          id="duration"
-          helperText={"Duration"}
-          labelId="duration"
-          value={duration ? duration : ""}
-          label="Duration"
-          name="duration"
-          onChange={handleDuration}
-          select={getTimes().map((item, index) => (
-            <MenuItem value={item.value} key={index}>
-              {item.menu}
-            </MenuItem>
-          ))}
-        />
-      </Grid>
-      <Grid item xs={6}>
-        <TextField
-          sx={text}
-          value={price ? price : ""}
-          variant="outlined"
-          onChange={handlePrice}
-          name="extra"
-          type="number"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <AttachMoneyIcon sx={{ color: "white" }} />
-              </InputAdornment>
-            ),
-          }}
-        />
-        <label style={label} for="price">
-          Price
-        </label>
-      </Grid>
-
-      <Grid item xs={12}>
-        <TextInput
-          onChange={handleExtra}
-          name="extra"
-          value={extra ? extra : ""}
-          type="text"
-          helperText={"Extra Info"}
-        />
-      </Grid>
+      {/* <Grid item xs={12} align="center">
+        <p style={info}>Add New Rates</p>
+      </Grid> */}
 
       <Grid item xs={12} align="center" sx={{ margin: "1em auto" }}>
         <FormControlLabel
@@ -360,13 +334,85 @@ const Rates = () => {
           }
           label="Touring Rate"
         />
+        <FormControlLabel
+          control={
+            <Checkbox
+              sx={checkBox}
+              onChange={handleCheckBox}
+              name="permanentRate"
+              value={permanentRate}
+              checked={permanentRate}
+            />
+          }
+          label="Permanent Rate"
+        />
       </Grid>
+
+      {flyMeRate || touringRate || permanentRate ? (
+        <>
+          {!flyMeRate && (
+            <Grid item xs={6}>
+              <Selects
+                id="duration"
+                helperText={"Duration"}
+                labelId="duration"
+                value={duration ? duration : ""}
+                label="Duration"
+                name="duration"
+                onChange={handleDuration}
+                select={getTimes().map((item, index) => (
+                  <MenuItem value={item.value} key={index}>
+                    {item.menu}
+                  </MenuItem>
+                ))}
+              />
+            </Grid>
+          )}
+
+          <Grid item xs={6}>
+            <TextField
+              sx={text}
+              value={price ? price : ""}
+              variant="outlined"
+              onChange={handlePrice}
+              name="extra"
+              type="number"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <AttachMoneyIcon sx={{ color: "white" }} />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <label style={label} for="price">
+              Rate
+            </label>
+          </Grid>
+
+          {flyMeRate && (
+            <Grid item xs={6} align="center">
+              <p>Price for you to fly to the city</p>
+            </Grid>
+          )}
+
+          <Grid item xs={12}>
+            <TextInput
+              onChange={handleExtra}
+              name="extra"
+              value={extra ? extra : ""}
+              type="text"
+              helperText={"Extra Info"}
+            />
+          </Grid>
+        </>
+      ) : null}
 
       {flyMeRate ? (
         <Grid item xs={12}>
           <Selects
             id="country"
-            helperText={"Which country are you based in ?"}
+            helperText="Country"
             labelId="country"
             value={country ? country : ""}
             label="Country"

@@ -120,6 +120,7 @@ const Contact = () => {
           </FormControl>
         </Grid>
         <Grid item xs={12}>
+      
           <TextInput
             onChange={handleChange}
             value={
@@ -149,15 +150,15 @@ const Contact = () => {
                 : null
             }
             label={
-              current === "website"
+              current === "website" && !website
                 ? "Enter Your Personal Website"
-                : current === "phone"
+                : current === "phone" && !phone
                 ? "Enter Your Mobile"
-                : current === "email"
+                : current === "email" && !email
                 ? "Enter Your Working Email"
-                : current === "twitter"
+                : current === "twitter" && !twitter
                 ? "Enter Your Twitter Handle"
-                : current === "instagram"
+                : current === "instagram" && !insta
                 ? "Enter Your Instagram Handle"
                 : null
             }
@@ -165,9 +166,9 @@ const Contact = () => {
               current === "website"
                 ? "Personal Website"
                 : current === "phone"
-                ? "Mobile"
+                ? "Work Mobile"
                 : current === "email"
-                ? "Email"
+                ? "Work Email"
                 : current === "twitter"
                 ? "Twitter"
                 : current === "instagram"

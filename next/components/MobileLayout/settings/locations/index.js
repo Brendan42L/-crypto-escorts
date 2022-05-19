@@ -92,7 +92,10 @@ const Locations = () => {
           )}
 
           {!userProfile.touring ? (
-            <p>Switch to a touring escort profile</p>
+            <p>
+              Switch to a touring escort profile <br /> ( no permanent location
+              needed )
+            </p>
           ) : (
             <p>Switch to a touring and permanently based escort profile</p>
           )}

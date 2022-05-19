@@ -1,4 +1,5 @@
-import { useState, useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
+import useState from "react-usestateref";
 import axios from "axios";
 import one from "../../../../lib/rates/one";
 import AppContext from "../../../../lib/AppContext";
@@ -15,13 +16,15 @@ const blRates = () => {
 
   const [warning, setWarning] = useState(false);
   const [selected, setSelected] = useState("");
-  const [rates, setRates] = useState([]);
-  const [flyMeRates, setFlyMeRates] = useState([]);
-  const [touringRates, setTouringRates] = useState([]);
+  const [rates, setRates, refRates] = useState([]);
+  const [flyMeRates, setFlyMeRates, refFlyMeRates] = useState([]);
+  const [touringRates, setTouringRates, refTouringRates] = useState([]);
   const [extraNotes, setExtraNotes] = useState("");
 
   const [touringRate, setTouringRate] = useState(false);
   const [flyMeRate, setFlyMeRate] = useState(false);
+  const [permanentRate, setPermanentRate] = useState(false);
+
 
   const [state, setState] = useState("");
   const [country, setCountry] = useState("");
@@ -41,7 +44,6 @@ const blRates = () => {
         `${process.env.NEXT_PUBLIC_REACT_APP_SERVER_URL}/model/read/${user._id} `
       )
       .then((res) => {
-        console.log("here", res.data);
         setTours(res.data.tours);
         setRates(res.data.rates);
         setTouringRates(res.data.touringRates);
@@ -98,6 +100,7 @@ const blRates = () => {
       const merged = { ...newRate, ...flyMe };
       setTouringRates((oldArray) => [...oldArray, merged]);
       save()
+      setSelectedCities([])
     } else if (state && city && country) {
       const flyMe = {
         country: country,
@@ -107,6 +110,9 @@ const blRates = () => {
       const merged = { ...newRate, ...flyMe };
       setFlyMeRates((oldArray) => [...oldArray, merged]);
       save()
+      setCountry("")
+      setCity("")
+      setState("")
     }
     setPrice(0);
     setExtra("");
@@ -182,9 +188,9 @@ const blRates = () => {
   const save = (rate) => {
     axios
       .put(`${process.env.NEXT_PUBLIC_REACT_APP_SERVER_URL}/model/update`, {
-        rates: !rate ? rates : [],
-        flyMeRates: !rate ? flyMeRates : [],
-        touringRates: !rate ? touringRates : [],
+        rates: !rate ? refRates.current : [],
+        flyMeRates: !rate ? refFlyMeRates.current : [],
+        touringRates: !rate ? refTouringRates.current : [],
         ratesNotes: extraNotes,
       })
       .then((res) => {
@@ -199,9 +205,16 @@ const blRates = () => {
     if (e.target.name === "touringRate") {
       setTouringRate(e.target.checked);
       setFlyMeRate(false);
+      setPermanentRate(false);
     } else if (e.target.name === "flyMeRate") {
       setFlyMeRate(e.target.checked);
       setTouringRate(false);
+      setPermanentRate(false);
+    }
+    else if (e.target.name === "permanentRate") {
+      setPermanentRate(e.target.checked);
+      setTouringRate(false);
+      setFlyMeRate(false);
     }
   };
 
@@ -252,6 +265,7 @@ const blRates = () => {
     handleCheckBox,
     touringRate,
     flyMeRate,
+    permanentRate,
     state,
     city,
     country,

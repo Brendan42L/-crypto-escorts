@@ -36,12 +36,22 @@ const MenuProps = {
   },
 };
 
+const label = {
+  fontSize: "1.2em",
+  fontWeight: "200",
+  margin: "1em 0 1.5em 0",
+  textAlign: "center",
+};
+
 const Optional = () => {
   const { getWishes, handleSelect, wishList, handleSave } = bl();
 
   return (
     <Grid container spacing={1} sx={{ padding: "1em 1em 6em 1em" }}>
       <Grid item xs={12} sx={{ marginBottom: "1em" }}>
+        <h6 style={label}>
+          This lets clients know what sort of gifts you may like
+        </h6>
         <FormControl sx={formControl}>
           {wishList ? (
             <InputLabel sx={inputLabelSelect} id="wishList">
@@ -79,11 +89,7 @@ const Optional = () => {
           </Select>
         </FormControl>
       </Grid>
-      <Btn
-        icon={<SaveIcon />}
-        name="Save"
-        function={() => handleSave()}
-      />
+      <Btn icon={<SaveIcon />} name="Save" function={() => handleSave()} />
     </Grid>
   );
 };
