@@ -156,6 +156,7 @@ const Profile = () => {
             <span style={{ textTransform: "lowercase" }}>yo</span>,{" "}
             {model?.nationality}
           </p>
+
           {qrCode && (
             <QRCode
               style={{ margin: "0 auto 3em auto" }}
@@ -166,6 +167,26 @@ const Profile = () => {
         <div className={styles.lowerRow}>
           <div className={styles.where}>
             <span>
+              {/* 
+            {model.cityOne}
+        <br />
+        {model.stateOne}
+        <br />
+        {model.cityTwo}
+        <br />
+        {model.stateTwo}
+        <br />
+        {model.cityThree}
+        <br />
+        {model.stateThree}
+        <br />
+        {model.cityFour}
+        <br />
+        {model.stateFour}
+        <br />
+        {model.cityFive}
+        <br />
+        {model.stateFive} */}
               {model.city ? model.city : model.state},{" "}
               {model.country === "AU"
                 ? "Australia"
@@ -216,7 +237,6 @@ const Profile = () => {
             <Book close={closeBookingForm} />
           </Modal>
         </div>
-
         <hr style={{ margin: "1em auto 1em auto" }} width="90%" />
 
         <div className={styles.rating}>
@@ -300,6 +320,7 @@ const Profile = () => {
           </div>
         </div>
 
+        <h4> {model.title}</h4>
         <div className={styles.profileWrapper}>
           <Image
             loader={myLoader}
@@ -351,49 +372,56 @@ const Profile = () => {
         </Stack>
         <div className={styles.details}>
           <div style={{ display: "flex" }}>
-            <Image
+            {/* <Image
               loader={myLoader}
               width={34}
               height={34}
               layout="intrinsic"
               objectFit="contain"
               src={"/ruler.png"}
-            />
+            /> */}
             <p style={{ paddingLeft: "0px" }}>{model.height}cm</p>
           </div>
 
-          <hr />
-         
-          <div style={{ display: "flex"}}>
-            <Image
-              loader={myLoader}
-              width={30}
-              height={30}
-              layout="intrinsic"
-              objectFit="contain"
-              src={"/breast.png"}
-            />
+          <div style={{ display: "flex" }}>
             <p style={{ paddingLeft: "10px", marginRight: "15px" }}>
               {model.cup}
             </p>
           </div>
-          
-        </div>
-        <div style={{ display: "flex", width: "100%", alignItems: "center", justifyContent: "center" }}>
-            <Image
-              loader={myLoader}
-              width={30}
-              height={30}
-              layout="intrinsic"
-              objectFit="contain"
-              src={"/hair-cut.png"}
-            />
-             <p style={{ paddingLeft: "10px", marginRight: "15px" }}>{model.hair}</p>
+
+          <div style={{ display: "flex" }}>
+            <p style={{ paddingLeft: "10px", marginRight: "15px" }}>
+              {model.eyes}
+            </p>
           </div>
-        
 
+          <div style={{ display: "flex" }}>
+            <p style={{ paddingLeft: "10px", marginRight: "15px" }}>
+              {model.bodyType}
+            </p>
+          </div>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Image
+            loader={myLoader}
+            width={30}
+            height={30}
+            layout="intrinsic"
+            objectFit="contain"
+            src={"/hair-cut.png"}
+          />
+          <p style={{ paddingLeft: "10px", marginRight: "15px" }}>
+            {model.hair}
+          </p>
+        </div>
         <hr style={{ margin: "1em auto 1em auto" }} width="90%" />
-
         <SRLWrapper>
           <div className={styles.imageContainer}>
             {photos
@@ -413,31 +441,114 @@ const Profile = () => {
               ))}
           </div>
         </SRLWrapper>
-
         <hr style={{ margin: "1em auto 1em auto" }} width="90%" />
 
         <h5 className={styles.bioTitle}>About Me</h5>
         <p className={styles.bio}>{model.bio}</p>
-
         <hr style={{ margin: "1em auto 1em auto" }} width="90%" />
-
         <div>
           <h5
             style={{ margin: "0em auto 1em auto" }}
             className={styles.bioTitle}
           >
-            Specialitys
+            Services
           </h5>
           <ul className={styles.services}>
-            {model.specialties?.map((spec, index) => (
-              <li key={index}>{spec}</li>
+            {model.services?.map((spes, index) => (
+              <li key={index}>{spes}</li>
             ))}
           </ul>
-        </div>
+          {model.servicesInfo}
+          <br />
+          {model.placeOfService}
+          <hr style={{ margin: "1em auto 1em auto" }} width="90%" />
+          <div>
+            <h5
+              style={{ margin: "0em auto 1em auto" }}
+              className={styles.bioTitle}
+            >
+              Contact
+            </h5>
+            {model.workMobile}
+            <br />
+            {model.workEmail}
+            <br />
+            {model.website}
+            <br />
+            {model.instagram}
+            <br />
+            {model.twitter}
+            <br />
+            {model.preferredContact}
+            <br />
+            {model.contactInfoText}
+          </div>
 
-        <hr style={{ margin: "1em auto 1em auto" }} width="90%" />
-        <h5 className={styles.bioTitle}>My NFTS</h5>
-        <div className={styles.nfts}></div>
+          <hr style={{ margin: "1em auto 1em auto" }} width="90%" />
+
+          <div>
+            <h5
+              style={{ margin: "0em auto 1em auto" }}
+              className={styles.bioTitle}
+            >
+              Rates
+            </h5>
+
+            {model.rates?.map((item) => (
+              <ul>
+                <li>{item.duration}</li>
+                <li>{item.price}</li>
+                <li>{item.extra}</li>
+              </ul>
+            ))}
+            <br />
+            {model.touringRates?.map((item) => (
+              <ul>
+                <li>{item.duration}</li>
+                <li>{item.price}</li>
+                <li>{item.extra}</li>
+                {item.cities.map((item, index) => (
+                  <ul>
+                    <li>{item.city}</li>
+                  </ul>
+                ))}
+              </ul>
+            ))}
+            <br />
+            {model.flyMeRates?.map((item) => (
+              <ul>
+                <li>{item.duration}</li>
+                <li>{item.price}</li>
+                <li>{item.extra}</li>
+                <li>{item.country}</li>
+                <li>{item.state}</li>
+                <li>{item.city}</li>
+              </ul>
+            ))}
+            <br />
+            {model.ratesNotes}
+          </div>
+
+          <hr style={{ margin: "1em auto 1em auto" }} width="90%" />
+
+          <div>
+            <h5
+              style={{ margin: "0em auto 1em auto" }}
+              className={styles.bioTitle}
+            >
+              Wish List
+            </h5>
+            <ul>
+              {model.wishList?.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </div>
+
+          <hr style={{ margin: "1em auto 1em auto" }} width="90%" />
+          <h5 className={styles.bioTitle}>My NFTS</h5>
+          <div className={styles.nfts}></div>
+        </div>
       </div>
     </>
   );
