@@ -10,6 +10,8 @@ import citiesOfNewZealand from "../../../lib/citiesOfNZ";
 import citiesOfUK from "../../../lib/citiesOfGB";
 import citiesOfSinapore from "../../../lib/citiesOfSG";
 
+import locations from "../settings/aboutMe/locations";
+
 const bl = () => {
   const { throwMessage, loadingModelClose, loadingModelOpen } =
     useContext(AppContext);
@@ -26,6 +28,7 @@ const bl = () => {
 
   const [country, setCountry, countryRef] = useState("");
   const [city, setCity] = useState("");
+  const [state, setState] = useState("");
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
   const [name, setName] = useState("");
@@ -34,6 +37,14 @@ const bl = () => {
   const [joined, setJoined] = useState(false);
   const [hasMore, setHasMore] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
+
+  const {
+    getCitiesOfState,
+    statesOfAustralia,
+    statesOfNewZealand,
+    statesOfUK,
+    statesOfSinapore,
+  } = locations();
 
   function useWindowSize() {
     const [windowSize, setWindowSize] = useState(undefined);
@@ -137,6 +148,7 @@ const bl = () => {
   const handelClear = () => {
     setCountry("");
     setCity("");
+    setState("");
     setHair("");
     setAge("");
     setJoined(false);
@@ -238,9 +250,11 @@ const bl = () => {
     handelClear,
     name,
     city,
+    state,
     country,
     setCountry,
     setCity,
+    setState,
     setJoined,
     setAvailable,
     setName,
@@ -279,6 +293,11 @@ const bl = () => {
     _citiesOfNewZealand,
     _citiesOfSinapore,
     _citiesOfUK,
+    getCitiesOfState,
+    statesOfAustralia,
+    statesOfNewZealand,
+    statesOfUK,
+    statesOfSinapore,
   };
 };
 

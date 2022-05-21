@@ -2,7 +2,7 @@ import { React, useContext } from "react";
 import bl from "./bl";
 import blReviews from "./reviews/blReviews";
 
-import styles from "../../../styles/Profile.module.css";
+import styles from "./Profile.module.css";
 import { makeStyles } from "@mui/styles";
 
 import Book from "./bookings/Book";
@@ -168,17 +168,14 @@ const Profile = () => {
           <div className={styles.where}>
             <span>
               {/* 
-            {model.cityOne}
-        <br />
-        {model.stateOne}
-        <br />
+       
         {model.cityTwo}
         <br />
         {model.stateTwo}
         <br />
         {model.cityThree}
         <br />
-        {model.stateThree}
+        {mo=del.stateThree}
         <br />
         {model.cityFour}
         <br />
@@ -187,7 +184,7 @@ const Profile = () => {
         {model.cityFive}
         <br />
         {model.stateFive} */}
-              {model.city ? model.city : model.state},{" "}
+              {model.cityOne ? model.cityOne : model.stateOne},{" "}
               {model.country === "AU"
                 ? "Australia"
                 : model.country === "GB"
@@ -237,7 +234,6 @@ const Profile = () => {
             <Book close={closeBookingForm} />
           </Modal>
         </div>
-        <hr style={{ margin: "1em auto 1em auto" }} width="90%" />
 
         <div className={styles.rating}>
           <Modal
@@ -319,8 +315,8 @@ const Profile = () => {
             </span>
           </div>
         </div>
-
-        <h4> {model.title}</h4>
+        <hr style={{ margin: "2em auto 1em auto" }} width="90%" />
+        <h4 className={styles.title}>{model.title}</h4>
         <div className={styles.profileWrapper}>
           <Image
             loader={myLoader}
@@ -371,56 +367,80 @@ const Profile = () => {
           ))}
         </Stack>
         <div className={styles.details}>
-          <div style={{ display: "flex" }}>
-            {/* <Image
+       
+
+          <div className={styles.traits}>
+            <Image
               loader={myLoader}
-              width={34}
-              height={34}
+              width={30}
+              height={30}
               layout="intrinsic"
               objectFit="contain"
-              src={"/ruler.png"}
-            /> */}
-            <p style={{ paddingLeft: "0px" }}>{model.height}cm</p>
-          </div>
-
-          <div style={{ display: "flex" }}>
+              src={"/breast.png"}
+            />
             <p style={{ paddingLeft: "10px", marginRight: "15px" }}>
               {model.cup}
             </p>
           </div>
 
-          <div style={{ display: "flex" }}>
+          <div className={styles.traits}>
+            <Image
+              loader={myLoader}
+              width={28}
+              height={28}
+              layout="intrinsic"
+              objectFit="contain"
+              src={"/eyes.png"}
+            />
             <p style={{ paddingLeft: "10px", marginRight: "15px" }}>
               {model.eyes}
             </p>
           </div>
 
-          <div style={{ display: "flex" }}>
+          <div className={styles.traits}>
+            <Image
+              loader={myLoader}
+              width={35}
+              height={35}
+              layout="intrinsic"
+              objectFit="contain"
+              src={"/body.png"}
+            />
             <p style={{ paddingLeft: "10px", marginRight: "15px" }}>
               {model.bodyType}
             </p>
           </div>
         </div>
-        <div
-          style={{
-            display: "flex",
-            width: "100%",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Image
-            loader={myLoader}
-            width={30}
-            height={30}
-            layout="intrinsic"
-            objectFit="contain"
-            src={"/hair-cut.png"}
-          />
-          <p style={{ paddingLeft: "10px", marginRight: "15px" }}>
-            {model.hair}
-          </p>
+
+        <div className={styles.detailsRowTwo}>
+        <div className={styles.traits}>
+            <Image
+              loader={myLoader}
+              width={34}
+              height={34}
+              layout="intrinsic"
+              objectFit="contain"
+              src={"/height.png"}
+            />
+            <p style={{ paddingLeft: "0px" }}>{model.height}cm</p>
+          </div>
+        
+
+          <div className={styles.traits}>
+            <Image
+              loader={myLoader}
+              width={30}
+              height={30}
+              layout="intrinsic"
+              objectFit="contain"
+              src={"/hair.png"}
+            />
+            <p style={{ paddingLeft: "10px", marginRight: "15px" }}>
+              {model.hair}
+            </p>
+          </div>
         </div>
+        
         <hr style={{ margin: "1em auto 1em auto" }} width="90%" />
         <SRLWrapper>
           <div className={styles.imageContainer}>
@@ -494,39 +514,60 @@ const Profile = () => {
               Rates
             </h5>
 
-            {model.rates?.map((item) => (
-              <ul>
-                <li>{item.duration}</li>
-                <li>{item.price}</li>
-                <li>{item.extra}</li>
-              </ul>
-            ))}
-            <br />
-            {model.touringRates?.map((item) => (
-              <ul>
-                <li>{item.duration}</li>
-                <li>{item.price}</li>
-                <li>{item.extra}</li>
-                {item.cities.map((item, index) => (
-                  <ul>
-                    <li>{item.city}</li>
-                  </ul>
-                ))}
-              </ul>
-            ))}
-            <br />
-            {model.flyMeRates?.map((item) => (
-              <ul>
-                <li>{item.duration}</li>
-                <li>{item.price}</li>
-                <li>{item.extra}</li>
-                <li>{item.country}</li>
-                <li>{item.state}</li>
-                <li>{item.city}</li>
-              </ul>
-            ))}
-            <br />
-            {model.ratesNotes}
+            <table>
+              <tr>
+                <th>Duration</th>
+                <th>Price</th>
+                <th>Extra</th>
+              </tr>
+
+              {model.rates?.map((item) => (
+                <tr>
+                  <td>{item.duration}</td>
+                  <td>{item.price}</td>
+                  <td>{item.extra}</td>
+                </tr>
+              ))}
+            </table>
+
+            <table>
+              <tr>
+                <th>Duration</th>
+                <th>Price</th>
+                <th>Extra</th>
+                <th>Cities</th>
+              </tr>
+
+              {model.touringRates?.map((item) => (
+                <tr>
+                  <td>{item.duration}</td>
+                  <td>{item.price}</td>
+                  <td>{item.extra}</td>
+                  <td>{item.cities.map((item, index) => item.city)}</td>
+                </tr>
+              ))}
+            </table>
+
+            <table>
+              <tr>
+                <th>Duration</th>
+                <th>Price</th>
+                <th>Extra</th>
+              </tr>
+
+              {model.flyMeRates?.map((item) => (
+                <tr>
+                  <td>{item.duration}</td>
+                  <td>{item.price}</td>
+                  <td>{item.extra}</td>
+                  <td>{item.country}</td>
+                  <td>{item.state}</td>
+                  <td>{item.city}</td>
+                </tr>
+              ))}
+            </table>
+
+            <p>{model.ratesNotes}</p>
           </div>
 
           <hr style={{ margin: "1em auto 1em auto" }} width="90%" />

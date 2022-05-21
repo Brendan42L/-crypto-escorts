@@ -3,7 +3,7 @@ import styles from "../../../styles/Directory.module.css";
 import { makeStyles } from "@mui/styles";
 
 import bl from "./bl";
-
+import Selects from "../inputs/Selects";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -93,8 +93,7 @@ const Directory = (props) => {
     hasMore,
     country,
     city,
-    _country,
-    _city,
+    state,
     handelClear,
     setJoined,
     setAvailable,
@@ -121,6 +120,7 @@ const Directory = (props) => {
     hair,
     handleSetView,
     loading,
+    setState,
     setCountry,
     setCity,
     joined,
@@ -131,6 +131,11 @@ const Directory = (props) => {
     _citiesOfNewZealand,
     _citiesOfSinapore,
     _citiesOfUK,
+    getCitiesOfState,
+    statesOfAustralia,
+    statesOfNewZealand,
+    statesOfUK,
+    statesOfSinapore,
   } = bl();
 
   const filterOptions = createFilterOptions({
@@ -390,44 +395,72 @@ const Directory = (props) => {
                   </Grid>
 
                   {country && (
-                    <Grid item xs={12} sm={6} >
-                      <Autocomplete
-                        isOptionEqualToValue={(option, value) =>
-                          option.isoCode === value.isoCode
-                        }
-                        value={city}
-                        onInputChange={(event, newInputValue) => {
-                          setCity(newInputValue);
-                        }}
-                        filterOptions={filterOptions}
-                        options={
-                          country === "AU"
-                            ? _citiesOfAustralia
-                            : country === "NZ"
-                            ? _citiesOfNewZealand
-                            : country === "GB"
-                            ? _citiesOfUK
-                            : country === "SG"
-                            ? _citiesOfSinapore
-                            : _citiesOfAustralia
-                        }
-                        renderInput={(params) => (
-                          <TextField
-                          type="text"
-                            InputProps={{
-                              className: classes.input,
-                            }}
-                            InputLabelProps={{
-                              className: classes.label,
-                            }}
-                            fullWidth
-                            className={classes.text}
-                            variant="outlined"
-                            {...params}
-                            label="City"
-                          />
-                        )}
-                      />
+                    <Grid item xs={12} sm={6}>
+                      {country && (
+                        <FormControl fullWidth className={classes.formControl}>
+                          <InputLabel>State</InputLabel>
+                          <Select
+                            onChange={(e) => setState(e.target.value)}
+                            className={classes.inputLabelSelect}
+                            labelId="state"
+                            id="states"
+                            value={state}
+                            label="State"
+                            name="states"
+                            defaultValue=""
+                            variant="filled"
+                          >
+                            onChange={(e) => setState(e.target.value)}
+                            select=
+                            {country === "AU"
+                              ? statesOfAustralia.map((item, i) => (
+                                  <MenuItem key={i} value={item.isoCode}>
+                                    {item.name}
+                                  </MenuItem>
+                                ))
+                              : country === "GB"
+                              ? statesOfUK.map((item, i) => (
+                                  <MenuItem key={i} value={item.isoCode}>
+                                    {item.name}
+                                  </MenuItem>
+                                ))
+                              : country === "NZ"
+                              ? statesOfNewZealand.map((item, i) => (
+                                  <MenuItem key={i} value={item.isoCode}>
+                                    {item.name}
+                                  </MenuItem>
+                                ))
+                              : country === "SG"
+                              ? statesOfSinapore.map((item, i) => (
+                                  <MenuItem key={i} value={item.isoCode}>
+                                    {item.name}
+                                  </MenuItem>
+                                ))
+                              : null}
+                          </Select>
+                        </FormControl>
+                      )}
+                    </Grid>
+                  )}
+
+                  {state && (
+                    <Grid item xs={12} sm={6}>
+                      <FormControl fullWidth className={classes.formControl}>
+                        <InputLabel>City</InputLabel>
+                        <Select
+                          onChange={(e) => setCity(e.target.value)}
+                          className={classes.inputLabelSelect}
+                          labelId="city"
+                          id="city"
+                          value={city}
+                          label="City"
+                          name="city"
+                          defaultValue=""
+                          variant="filled"
+                        >
+                          {getCitiesOfState(country, state)}
+                        </Select>
+                      </FormControl>
                     </Grid>
                   )}
 
@@ -446,7 +479,7 @@ const Directory = (props) => {
                       options={namesRef.current}
                       renderInput={(params) => (
                         <TextField
-                        type="text"
+                          type="text"
                           InputProps={{
                             className: classes.input,
                           }}
@@ -589,7 +622,7 @@ const Directory = (props) => {
                         as={decodeURIComponent(
                           `/models/${model.fName?.toLocaleLowerCase()}-${model.lName?.toLocaleLowerCase()}?id=${
                             model._id
-                          }`
+                          }&state=${state}&city=${city}`
                         )}
                       >
                         <a>
