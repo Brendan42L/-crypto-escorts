@@ -180,6 +180,7 @@ contract BookingFactory is ReentrancyGuard {
             "Please ensure the correct fee is sent"
         );
 
+        //  change trasfer method - no longer safe
         payable(_model).transfer(msg.value);
         modelCheckIn(_model, _lottery, _bookingNumber);
     }
@@ -197,7 +198,9 @@ contract BookingFactory is ReentrancyGuard {
     {
         uint256 deposit = bookings[_bookingNumber].models[_model];
         address payable lotteryAddress = payable(address(_lottery));
+         //  change trasfer method - no longer safe
         payable(lotteryAddress).transfer(deposit.div(20));
+         //  change trasfer method - no longer safe
         payable(_owner).transfer(deposit.sub(deposit.div(20)));
         Booking storage b = bookings[_bookingNumber];
         b.paid[_model] = true;
@@ -227,9 +230,11 @@ contract BookingFactory is ReentrancyGuard {
             if (bookings[_bookingNumber].paid[_models[i]] == true) {
                 continue;
             } else {
+                 //  change trasfer method - no longer safe
                 payable(_models[i]).transfer(
                     bookings[_bookingNumber].models[_models[i]].div(2)
                 );
+                 //  change trasfer method - no longer safe
                 payable(_owner).transfer(
                     bookings[_bookingNumber].models[_models[i]].div(2)
                 );
@@ -250,6 +255,7 @@ contract BookingFactory is ReentrancyGuard {
             "Only Model can cancel own request"
         );
 
+ //  change trasfer method - no longer safe
         payable(bookings[_bookingNumber].client).transfer(
             bookings[_bookingNumber].models[msg.sender]
         );
@@ -297,6 +303,7 @@ contract BookingFactory is ReentrancyGuard {
         payable
         OnlyOwner
     {
+         //  change trasfer method - no longer safe
         payable(bookings[_bookingNumber].client).transfer(
             bookings[_bookingNumber].models[_model]
         );
@@ -344,6 +351,7 @@ contract BookingFactory is ReentrancyGuard {
         uint256 _deposit,
         address _model
     ) public payable OnlyOwner {
+         //  change trasfer method - no longer safe
         payable(_owner).transfer(_deposit);
         bookings[_bookingNumber].paid[_model] == true;
         bookings[_bookingNumber].totalPaid.increment();
